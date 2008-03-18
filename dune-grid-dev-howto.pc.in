@@ -1,0 +1,14 @@
+prefix=@prefix@
+exec_prefix=@exec_prefix@
+libdir=@libdir@
+includedir=@includedir@
+CXX=@CXX@
+CC=@CC@
+
+Name: @PACKAGE_NAME@
+Version: @VERSION@
+Description: Dune (Distributed and Unified Numerics Environment) grid developer howto module
+URL: http://dune-project.org/
+Requires: @REQUIRES@
+Libs:
+Cflags: -I${includedir}
