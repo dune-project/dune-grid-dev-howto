@@ -7,14 +7,14 @@
 #include <dune/grid/test/checkintersectionit.cc>
 
 
-#include <dune/identitygrid/identitygrid.hh>
+#include <dune/grid/identitygrid.hh>
 
 
 
 using namespace Dune;
 
 
-// test subgrid for given dimension
+// test IdentityGrid for given dimension
 template <int dim>
 void testDim()
 {
@@ -35,30 +35,10 @@ void testDim()
   typedef typename GridType::template Codim<0>::LevelIterator HostElementIterator;
   typedef typename IdentityGrid<GridType>::template Codim<0>::LevelIterator ElementIterator;
 
-  IdentityGrid<GridType> subGrid(grid);
+  IdentityGrid<GridType> identityGrid(grid);
 
-  gridcheck(subGrid);
-  checkIntersectionIterator(subGrid);
-
-  // refine subgrid
-  {
-    ElementIterator eIt    = subGrid.template lbegin<0>(0);
-    ElementIterator eEndIt = subGrid.template lend<0>(0);
-    for (; eIt!=eEndIt; ++eIt) {
-      if (eIt->geometry()[0][0] < 0.25)
-        subGrid.mark(1, eIt);
-    }
-
-    subGrid.preAdapt();
-    subGrid.adapt();
-    subGrid.postAdapt();
-  }
-
-  // check locally refined subgrid
-  std::cout << "Check locally refined subgrid with dim=" << dim << std::endl;
-
-  gridcheck(subGrid);
-  checkIntersectionIterator(subGrid);
+  gridcheck(identityGrid);
+  checkIntersectionIterator(identityGrid);
 
 }
 
