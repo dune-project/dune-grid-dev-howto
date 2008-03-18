@@ -1,0 +1,75 @@
+// -*- tab-width: 4; indent-tabs-mode: nil; c-basic-offset: 2 -*-
+// vi: set et ts=4 sw=2 sts=2:
+#ifndef DUNE_IDENTITYGRID_ENTITY_POINTER_HH
+#define DUNE_IDENTITYGRID_ENTITY_POINTER_HH
+
+/** \file
+ * \brief The IdentityGridEntityPointer class
+ */
+
+namespace Dune {
+
+
+  /** Acts as a pointer to an  entities of a given codimension.
+   */
+  template<int codim, class GridImp>
+  class IdentityGridEntityPointer :
+    public EntityPointerDefaultImplementation <codim, GridImp, Dune::IdentityGridEntityPointer<codim,GridImp> >
+  {
+  private:
+
+    enum { dim = GridImp::dimension };
+
+
+  public:
+
+    typedef typename GridImp::template Codim<codim>::Entity Entity;
+
+    typedef IdentityGridEntityPointer<codim,GridImp> Base;
+
+    // The codimension of this entitypointer wrt the host grid
+    enum {CodimInHostGrid = GridImp::HostGridType::dimension - GridImp::dimension + codim};
+
+    // EntityPointer to the equivalent entity in the host grid
+    typedef typename GridImp::HostGridType::Traits::template Codim<CodimInHostGrid>::EntityPointer HostGridEntityPointer;
+
+
+    //! constructor
+    IdentityGridEntityPointer (const GridImp* subGrid, const HostGridEntityPointer& hostEntity_) :
+      subGrid_(subGrid),
+      virtualEntity_(subGrid, hostEntity_)
+    {}
+
+
+    //! equality
+    bool equals(const IdentityGridEntityPointer<codim,GridImp>& i) const {
+      return virtualEntity_.getTarget() == i.virtualEntity_.getTarget();
+    }
+
+
+    //! dereferencing
+    Entity& dereference() const {
+      return virtualEntity_;
+    }
+
+
+    //! ask for level of entity
+    int level () const {
+      return virtualEntity_.level();
+    }
+
+
+  protected:
+
+    const GridImp* subGrid_;
+
+    //! virtual entity
+    mutable IdentityGridMakeableEntity<codim,dim,GridImp> virtualEntity_;
+
+
+  };
+
+
+} // end namespace Dune
+
+#endif
