@@ -266,22 +266,16 @@ namespace Dune {
     /*@{*/
 
 
-#warning Adaptation stuff is not compiled!
-#if 0
     /** global refinement
      * \todo optimize implementation
      */
     void globalRefine (int refCount)
     {
-      typedef typename Traits::template Codim<0>::LeafIterator ElementLeafIterator;
-      ElementLeafIterator it = leafbegin<0>();
-      ElementLeafIterator end = leafend<0>();
-      for(; it!=end; ++it)
-        mark(1, it);
-      preAdapt();
-      adapt();
+      hostgrid_->globalRefine(refCount);
     }
 
+#warning Adaptation stuff is not compiled!
+#if 0
     /** \brief Mark entity for refinement
      *
      * This only works for entities of codim 0.
@@ -294,7 +288,7 @@ namespace Dune {
      */
     bool mark(int refCount, const typename Traits::template Codim<0>::EntityPointer & e)
     {
-      return hostgrid_->mark(refCount, getHostEntityPointer(e));
+      return hostgrid_->mark(refCount, getHostEntity(e));
     }
 
 
@@ -304,21 +298,7 @@ namespace Dune {
      */
     int getMark(const typename Traits::template Codim<0>::EntityPointer & e) const
     {
-      if ((adaptationStep_==preAdaptDone)or (adaptationStep_==adaptDone))
-        DUNE_THROW(InvalidStateException, "You can not use getMark() after preAdapt() or adapt() !");
-
-      if (not (e->isLeaf()))
-        return 0;
-
-      int level = e->level();
-      int index = levelIndexSet(level).index(*e);
-
-      if (refinementMark_[level][index])
-        return 1;
-      if (coarseningMark_[level][index])
-        return -1;
-
-      return 0;
+      return hostgrid_->getMark(getHostEntity(e));
     }
 
 
@@ -746,17 +726,6 @@ namespace Dune {
       return getRealImplementation(e).hostEntity_;
     }
 
-
-    /** \brief Track hostgrid adaptation
-     *
-     * Returns true if *adapt() method of hostgrid was called
-     * during last run of *adapt() in subgrid
-     */
-    bool hostGridAdapted ()
-    {
-      return (hostAdaptationStep_!=nothingDone);
-    }
-
   protected:
 
     //! The host grid which contains the actual grid hierarchy structure
@@ -802,18 +771,6 @@ namespace Dune {
 
     //! \todo Please doc me !
     IdentityGridLocalIdSet<const IdentityGrid<HostGrid> > localIdSet_;
-
-    //! Stores the maximal difference of levels than elements containing a common vertex should have
-    int maxLevelDiff_;
-
-    //! Defines the possible steps in adaptation cycle
-    enum AdaptationStep {nothingDone, preAdaptDone, adaptDone, postAdaptDone};
-
-    //! Stores current adaptation step of subgrid
-    AdaptationStep adaptationStep_;
-
-    //! Stores current adaptation step of host grid
-    AdaptationStep hostAdaptationStep_;
 
   }; // end Class IdentityGrid
 
