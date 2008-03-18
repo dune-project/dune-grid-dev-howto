@@ -1,0 +1,7 @@
+.deps
+Makefile
+Makefile.in
+semantic.cache
+*.html
+Makefile.dist
+Makefile.dist.in
