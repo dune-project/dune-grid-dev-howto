@@ -38,10 +38,10 @@ namespace Dune {
     typedef typename GridImp::template Codim<1>::LocalGeometry LocalGeometry;
     typedef typename GridImp::template Codim<0>::Entity Entity;
 
-    IdentityGridLeafIntersectionIterator(const GridImp* subGrid,
+    IdentityGridLeafIntersectionIterator(const GridImp* identityGrid,
                                          const HostLeafIntersectionIterator& hostIterator)
       : selfLocal_(NULL), neighborLocal_(NULL), intersectionGlobal_(NULL),
-        subGrid_(subGrid),
+        identityGrid_(identityGrid),
         hostIterator_(hostIterator)
     {}
 
@@ -79,14 +79,14 @@ namespace Dune {
     //! return EntityPointer to the Entity on the inside of this intersection
     //! (that is the Entity where we started this Iterator)
     EntityPointer inside() const {
-      return IdentityGridEntityPointer<0,GridImp> (subGrid_, hostIterator_.inside());
+      return IdentityGridEntityPointer<0,GridImp> (identityGrid_, hostIterator_.inside());
     }
 
 
     //! return EntityPointer to the Entity on the outside of this intersection
     //! (that is the neighboring Entity)
     EntityPointer outside() const {
-      return IdentityGridEntityPointer<0,GridImp> (subGrid_, hostIterator_.outside());
+      return IdentityGridEntityPointer<0,GridImp> (identityGrid_, hostIterator_.outside());
     }
 
 
@@ -176,7 +176,7 @@ namespace Dune {
     //! information.
     mutable IdentityGridMakeableGeometry<dim-1,dimworld,GridImp>* intersectionGlobal_;
 
-    const GridImp* subGrid_;
+    const GridImp* identityGrid_;
 
     HostLeafIntersectionIterator hostIterator_;
   };
@@ -206,10 +206,10 @@ namespace Dune {
     typedef typename GridImp::template Codim<1>::LocalGeometry LocalGeometry;
     typedef typename GridImp::template Codim<0>::Entity Entity;
 
-    IdentityGridLevelIntersectionIterator(const GridImp* subGrid,
+    IdentityGridLevelIntersectionIterator(const GridImp* identityGrid,
                                           const HostLevelIntersectionIterator& hostIterator)
       : selfLocal_(NULL), neighborLocal_(NULL), intersectionGlobal_(NULL),
-        subGrid_(subGrid), hostIterator_(hostIterator)
+        identityGrid_(identityGrid), hostIterator_(hostIterator)
     {}
 
     //! equality
@@ -244,14 +244,14 @@ namespace Dune {
     //! return EntityPointer to the Entity on the inside of this intersection
     //! (that is the Entity where we started this Iterator)
     EntityPointer inside() const {
-      return IdentityGridEntityPointer<0,GridImp> (subGrid_, hostIterator_.inside());
+      return IdentityGridEntityPointer<0,GridImp> (identityGrid_, hostIterator_.inside());
     }
 
 
     //! return EntityPointer to the Entity on the outside of this intersection
     //! (that is the neighboring Entity)
     EntityPointer outside() const {
-      return IdentityGridEntityPointer<0,GridImp> (subGrid_, hostIterator_.outside());
+      return IdentityGridEntityPointer<0,GridImp> (identityGrid_, hostIterator_.outside());
     }
 
 
@@ -338,7 +338,7 @@ namespace Dune {
     //! information.
     mutable IdentityGridMakeableGeometry<dim-1,dimworld,GridImp>* intersectionGlobal_;
 
-    const GridImp* subGrid_;
+    const GridImp* identityGrid_;
 
     HostLevelIntersectionIterator hostIterator_;
 

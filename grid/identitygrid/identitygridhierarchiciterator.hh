@@ -32,9 +32,9 @@ namespace Dune {
 
 
     //! the default Constructor
-    explicit IdentityGridHierarchicIterator(const GridImp* subGrid, const IdentityGridElement& startEntity, int maxLevel) :
-      IdentityGridEntityPointer<0,GridImp>(subGrid, startEntity.hostEntity_->hbegin(maxLevel)),
-      subGrid_(subGrid),
+    explicit IdentityGridHierarchicIterator(const GridImp* identityGrid, const IdentityGridElement& startEntity, int maxLevel) :
+      IdentityGridEntityPointer<0,GridImp>(identityGrid, startEntity.hostEntity_->hbegin(maxLevel)),
+      identityGrid_(identityGrid),
       hostGridHierarchicIterator_(startEntity.hostEntity_->hbegin(maxLevel)),
       hostGridHierarchicEndIterator_(startEntity.hostEntity_->hend(maxLevel))
     {
@@ -43,9 +43,9 @@ namespace Dune {
 
 
     //! \todo Please doc me !
-    explicit IdentityGridHierarchicIterator(const GridImp* subGrid, const IdentityGridElement& startEntity, int maxLevel, bool endDummy) :
-      IdentityGridEntityPointer<0,GridImp>(subGrid, startEntity.hostEntity_->hend(maxLevel)),
-      subGrid_(subGrid),
+    explicit IdentityGridHierarchicIterator(const GridImp* identityGrid, const IdentityGridElement& startEntity, int maxLevel, bool endDummy) :
+      IdentityGridEntityPointer<0,GridImp>(identityGrid, startEntity.hostEntity_->hend(maxLevel)),
+      identityGrid_(identityGrid),
       hostGridHierarchicIterator_(startEntity.hostEntity_->hbegin(maxLevel)),
       hostGridHierarchicEndIterator_(startEntity.hostEntity_->hend(maxLevel))
     {}
@@ -70,11 +70,11 @@ namespace Dune {
     // The level index of the host entity that we are pointing to
     //! \todo Please doc me !
     unsigned int hostLevelIndex() const {
-      return subGrid_->hostgrid_->levelIndexSet(hostGridHierarchicIterator_.level()).index(*hostGridHierarchicIterator_);
+      return identityGrid_->hostgrid_->levelIndexSet(hostGridHierarchicIterator_.level()).index(*hostGridHierarchicIterator_);
     }
 
 
-    const GridImp* subGrid_;
+    const GridImp* identityGrid_;
 
     HostGridHierarchicIterator hostGridHierarchicIterator_;
 

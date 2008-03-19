@@ -50,9 +50,9 @@ namespace Dune {
 
 
     //! \todo Please doc me !
-    IdentityGridMakeableEntity(const GridImp* subGrid, const HostGridEntityPointer& hostEntity) :
-      GridImp::template Codim<codim>::Entity (IdentityGridEntity<codim, dim, const GridImp>(subGrid,hostEntity)),
-      subGrid_(subGrid)
+    IdentityGridMakeableEntity(const GridImp* identityGrid, const HostGridEntityPointer& hostEntity) :
+      GridImp::template Codim<codim>::Entity (IdentityGridEntity<codim, dim, const GridImp>(identityGrid,hostEntity)),
+      identityGrid_(identityGrid)
     {}
 
 
@@ -70,7 +70,7 @@ namespace Dune {
 
   private:
 
-    const GridImp* subGrid_;
+    const GridImp* identityGrid_;
   };
 
 
@@ -125,9 +125,9 @@ namespace Dune {
 
 
     //! Constructor for an entity in a given grid level
-    IdentityGridEntity(const GridImp* subGrid, const HostGridEntityPointer& hostEntity) :
+    IdentityGridEntity(const GridImp* identityGrid, const HostGridEntityPointer& hostEntity) :
       hostEntity_(hostEntity),
-      subGrid_(subGrid),
+      identityGrid_(identityGrid),
       geo_(0),
       geoInFather_(0)
     {}
@@ -136,7 +136,7 @@ namespace Dune {
     //! \todo Please doc me !
     IdentityGridEntity(const IdentityGridEntity& original) :
       hostEntity_(original.hostEntity_),
-      subGrid_(original.subGrid_),
+      identityGrid_(original.identityGrid_),
       geo_(0),
       geoInFather_(0)
     {}
@@ -173,7 +173,7 @@ namespace Dune {
           delete geoInFather_;
           geoInFather_ = 0;
         }
-        subGrid_ = original.subGrid_;
+        identityGrid_ = original.identityGrid_;
         hostEntity_ = original.hostEntity_;
       }
       return *this;
@@ -232,7 +232,7 @@ namespace Dune {
     }
 
 
-    const GridImp* subGrid_;
+    const GridImp* identityGrid_;
 
     //! the current geometry
     mutable IdentityGridMakeableGeometry<dim-codim,GridImp::dimensionworld,GridImp> *geo_;
@@ -281,8 +281,8 @@ namespace Dune {
 
 
     //! Constructor for an entity in a given grid level
-    IdentityGridEntity(const GridImp* subGrid, const HostGridEntityPointer& hostEntity) :
-      subGrid_(subGrid),
+    IdentityGridEntity(const GridImp* identityGrid, const HostGridEntityPointer& hostEntity) :
+      identityGrid_(identityGrid),
       geo_(0),
       geoInFather_(0),
       hostEntity_(hostEntity)
@@ -291,7 +291,7 @@ namespace Dune {
 
     //! \todo Please doc me !
     IdentityGridEntity(const IdentityGridEntity& original) :
-      subGrid_(original.subGrid_),
+      identityGrid_(original.identityGrid_),
       geo_(0),
       geoInFather_(0),
       hostEntity_(original.hostEntity_)
@@ -329,7 +329,7 @@ namespace Dune {
           delete geoInFather_;
           geoInFather_ = 0;
         }
-        subGrid_ = original.subGrid_;
+        identityGrid_ = original.identityGrid_;
         hostEntity_ = original.hostEntity_;
       }
       return *this;
@@ -374,34 +374,34 @@ namespace Dune {
      */
     template<int cc>
     typename GridImp::template Codim<cc>::EntityPointer entity (int i) const {
-      return IdentityGridEntityPointer<cc,GridImp>(subGrid_, hostEntity_->template entity<cc>(i));
+      return IdentityGridEntityPointer<cc,GridImp>(identityGrid_, hostEntity_->template entity<cc>(i));
     }
 
 
     //! First level intersection
     IdentityGridLevelIntersectionIterator<GridImp> ilevelbegin () const {
-      return IdentityGridLevelIntersectionIterator<GridImp>(subGrid_,
+      return IdentityGridLevelIntersectionIterator<GridImp>(identityGrid_,
                                                             hostEntity_->ilevelbegin());
     }
 
 
     //! Reference to one past the last neighbor
     IdentityGridLevelIntersectionIterator<GridImp> ilevelend () const {
-      return IdentityGridLevelIntersectionIterator<GridImp>(subGrid_,
+      return IdentityGridLevelIntersectionIterator<GridImp>(identityGrid_,
                                                             hostEntity_->ilevelend());
     }
 
 
     //! First leaf intersection
     IdentityGridLeafIntersectionIterator<GridImp> ileafbegin () const {
-      return IdentityGridLeafIntersectionIterator<GridImp>(subGrid_,
+      return IdentityGridLeafIntersectionIterator<GridImp>(identityGrid_,
                                                            hostEntity_->ileafbegin());
     }
 
 
     //! Reference to one past the last leaf intersection
     IdentityGridLeafIntersectionIterator<GridImp> ileafend () const {
-      return IdentityGridLeafIntersectionIterator<GridImp>(subGrid_,
+      return IdentityGridLeafIntersectionIterator<GridImp>(identityGrid_,
                                                            hostEntity_->ileafend());
     }
 
@@ -415,7 +415,7 @@ namespace Dune {
     //! Inter-level access to father element on coarser grid.
     //! Assumes that meshes are nested.
     IdentityGridEntityPointer<0,GridImp> father () const {
-      return IdentityGridEntityPointer<0,GridImp>(subGrid_, hostEntity_->father());
+      return IdentityGridEntityPointer<0,GridImp>(identityGrid_, hostEntity_->father());
     }
 
 
@@ -441,26 +441,26 @@ namespace Dune {
      */
     IdentityGridHierarchicIterator<GridImp> hbegin (int maxLevel) const
     {
-      return IdentityGridHierarchicIterator<const GridImp>(subGrid_, *this, maxLevel);
+      return IdentityGridHierarchicIterator<const GridImp>(identityGrid_, *this, maxLevel);
     }
 
 
     //! Returns iterator to one past the last son
     IdentityGridHierarchicIterator<GridImp> hend (int maxLevel) const
     {
-      return IdentityGridHierarchicIterator<const GridImp>(subGrid_, *this, maxLevel, true);
+      return IdentityGridHierarchicIterator<const GridImp>(identityGrid_, *this, maxLevel, true);
     }
 
 
     //! \todo Please doc me !
     bool wasRefined () const
     {
-      if (subGrid_->adaptationStep!=GridImp::adaptDone)
+      if (identityGrid_->adaptationStep!=GridImp::adaptDone)
         return false;
 
       int level = this->level();
-      int index = subGrid_->levelIndexSet(level).index(*this);
-      return subGrid_->refinementMark_[level][index];
+      int index = identityGrid_->levelIndexSet(level).index(*this);
+      return identityGrid_->refinementMark_[level][index];
     }
 
 
@@ -493,7 +493,7 @@ namespace Dune {
     }
 
 
-    const GridImp* subGrid_;
+    const GridImp* identityGrid_;
 
     //! the current geometry
     mutable IdentityGridMakeableGeometry<dim,GridImp::dimensionworld,GridImp> *geo_;

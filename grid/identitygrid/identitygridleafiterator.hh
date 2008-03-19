@@ -25,10 +25,10 @@ namespace Dune {
   public:
 
     //! \todo Please doc me !
-    explicit IdentityGridLeafIterator(const GridImp* subGrid) :
-      IdentityGridEntityPointer<codim,GridImp>(subGrid, subGrid->hostgrid_->template leafbegin<codim>()),
-      hostGridLeafIterator_(subGrid->hostgrid_->template leafbegin<codim>()),
-      hostGridLeafEndIterator_(subGrid->hostgrid_->template leafend<codim>())
+    explicit IdentityGridLeafIterator(const GridImp* identityGrid) :
+      IdentityGridEntityPointer<codim,GridImp>(identityGrid, identityGrid->hostgrid_->template leafbegin<codim>()),
+      hostGridLeafIterator_(identityGrid->hostgrid_->template leafbegin<codim>()),
+      hostGridLeafEndIterator_(identityGrid->hostgrid_->template leafend<codim>())
     {
       this->virtualEntity_.setToTarget(hostGridLeafIterator_);
     }
@@ -37,10 +37,10 @@ namespace Dune {
     /** \brief Constructor which create the end iterator
      *  \param endDummy Here only to distinguish it from the other constructor
      */
-    explicit IdentityGridLeafIterator(const GridImp* subGrid, bool endDummy) :
-      IdentityGridEntityPointer<codim,GridImp>(subGrid, subGrid->hostgrid_->template leafend<codim>()),
-      hostGridLeafIterator_(subGrid->hostgrid_->template leafbegin<codim>()),
-      hostGridLeafEndIterator_(subGrid->hostgrid_->template leafend<codim>())
+    explicit IdentityGridLeafIterator(const GridImp* identityGrid, bool endDummy) :
+      IdentityGridEntityPointer<codim,GridImp>(identityGrid, identityGrid->hostgrid_->template leafend<codim>()),
+      hostGridLeafIterator_(identityGrid->hostgrid_->template leafbegin<codim>()),
+      hostGridLeafEndIterator_(identityGrid->hostgrid_->template leafend<codim>())
     {}
 
 

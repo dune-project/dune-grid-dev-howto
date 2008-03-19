@@ -31,10 +31,10 @@ namespace Dune {
   public:
 
     //! Constructor
-    explicit IdentityGridLevelIterator(const GridImp* subGrid, int level)
-      : IdentityGridEntityPointer<codim,GridImp>(subGrid, subGrid->hostgrid_->template lbegin<codim>(level)),
-        hostGridLevelIterator_(subGrid->hostgrid_->template lbegin<codim>(level)),
-        hostGridLevelEndIterator_(subGrid->hostgrid_->template lend<codim>(level))
+    explicit IdentityGridLevelIterator(const GridImp* identityGrid, int level)
+      : IdentityGridEntityPointer<codim,GridImp>(identityGrid, identityGrid->hostgrid_->template lbegin<codim>(level)),
+        hostGridLevelIterator_(identityGrid->hostgrid_->template lbegin<codim>(level)),
+        hostGridLevelEndIterator_(identityGrid->hostgrid_->template lend<codim>(level))
     {
       this->virtualEntity_.setToTarget(hostGridLevelIterator_);
     }
@@ -43,11 +43,11 @@ namespace Dune {
     /** \brief Constructor which create the end iterator
         \param endDummy Here only to distinguish it from the other constructor
      */
-    explicit IdentityGridLevelIterator(const GridImp* subGrid, int level, bool endDummy)
+    explicit IdentityGridLevelIterator(const GridImp* identityGrid, int level, bool endDummy)
       :
-        IdentityGridEntityPointer<codim,GridImp>(subGrid, subGrid->hostgrid_->template lend<codim>(level)),
-        hostGridLevelIterator_(subGrid->hostgrid_->template lend<codim>(level)),
-        hostGridLevelEndIterator_(subGrid->hostgrid_->template lend<codim>(level))
+        IdentityGridEntityPointer<codim,GridImp>(identityGrid, identityGrid->hostgrid_->template lend<codim>(level)),
+        hostGridLevelIterator_(identityGrid->hostgrid_->template lend<codim>(level)),
+        hostGridLevelEndIterator_(identityGrid->hostgrid_->template lend<codim>(level))
     {}
 
 

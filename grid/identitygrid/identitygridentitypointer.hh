@@ -35,9 +35,9 @@ namespace Dune {
 
 
     //! constructor
-    IdentityGridEntityPointer (const GridImp* subGrid, const HostGridEntityPointer& hostEntity_) :
-      subGrid_(subGrid),
-      virtualEntity_(subGrid, hostEntity_)
+    IdentityGridEntityPointer (const GridImp* identityGrid, const HostGridEntityPointer& hostEntity_) :
+      identityGrid_(identityGrid),
+      virtualEntity_(identityGrid, hostEntity_)
     {}
 
 
@@ -61,7 +61,7 @@ namespace Dune {
 
   protected:
 
-    const GridImp* subGrid_;
+    const GridImp* identityGrid_;
 
     //! virtual entity
     mutable IdentityGridMakeableEntity<codim,dim,GridImp> virtualEntity_;
