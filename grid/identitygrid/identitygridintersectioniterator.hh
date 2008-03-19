@@ -40,8 +40,9 @@ namespace Dune {
 
     IdentityGridLeafIntersectionIterator(const GridImp* subGrid,
                                          const HostLeafIntersectionIterator& hostIterator)
-      : subGrid_(subGrid), hostIterator_(hostIterator),
-        selfLocal_(NULL), neighborLocal_(NULL), intersectionGlobal_(NULL)
+      : selfLocal_(NULL), neighborLocal_(NULL), intersectionGlobal_(NULL),
+        subGrid_(subGrid),
+        hostIterator_(hostIterator)
     {}
 
     //! The Destructor
@@ -207,8 +208,8 @@ namespace Dune {
 
     IdentityGridLevelIntersectionIterator(const GridImp* subGrid,
                                           const HostLevelIntersectionIterator& hostIterator)
-      : subGrid_(subGrid), hostIterator_(hostIterator),
-        selfLocal_(NULL), neighborLocal_(NULL), intersectionGlobal_(NULL)
+      : selfLocal_(NULL), neighborLocal_(NULL), intersectionGlobal_(NULL),
+        subGrid_(subGrid), hostIterator_(hostIterator)
     {}
 
     //! equality
