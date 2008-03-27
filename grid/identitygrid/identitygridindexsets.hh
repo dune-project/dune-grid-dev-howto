@@ -37,7 +37,7 @@ namespace Dune {
   {
   public:
 
-    typedef typename RemoveConst<GridImp>::Type::HostGridType HostGrid;
+    typedef typename remove_const<GridImp>::type::HostGridType HostGrid;
 
     enum {dim = GridImp::dimension};
 
@@ -133,7 +133,7 @@ namespace Dune {
   class IdentityGridLeafIndexSet :
     public IndexSetDefaultImplementation<GridImp,IdentityGridLeafIndexSet<GridImp>,IdentityGridLeafIndexSetTypes<GridImp> >
   {
-    typedef typename RemoveConst<GridImp>::Type::HostGridType HostGrid;
+    typedef typename remove_const<GridImp>::type::HostGridType HostGrid;
 
   public:
 
@@ -142,7 +142,7 @@ namespace Dune {
      * We use the remove_const to extract the Type from the mutable class,
      * because the const class is not instatiated yet.
      */
-    enum {dim = RemoveConst<GridImp>::Type::dimension};
+    enum {dim = remove_const<GridImp>::type::dimension};
 
     typedef IndexSet<GridImp,IdentityGridLeafIndexSet<GridImp>,IdentityGridLeafIndexSetTypes<GridImp> > Base;
 
@@ -159,7 +159,7 @@ namespace Dune {
         because the const class is not instatiated yet.
      */
     template<int codim>
-    int index (const typename RemoveConst<GridImp>::Type::Traits::template Codim<codim>::Entity& e) const
+    int index (const typename remove_const<GridImp>::type::template Codim<codim>::Entity& e) const
     {
       return grid_->hostgrid_->leafIndexSet().template index<codim>(*grid_->template getHostEntity<codim>(e));
     }
@@ -171,7 +171,7 @@ namespace Dune {
         because the const class is not instatiated yet.
      */
     template<int codim>
-    int subIndex (const typename RemoveConst<GridImp>::Type::Traits::template Codim<0>::Entity& e, int i) const
+    int subIndex (const typename remove_const<GridImp>::type::Traits::template Codim<0>::Entity& e, int i) const
     {
       return grid_->hostgrid_->leafIndexSet().template subIndex<codim>(*grid_->template getHostEntity<0>(e),i);
     }
@@ -230,10 +230,10 @@ namespace Dune {
   template <class GridImp>
   class IdentityGridGlobalIdSet :
     public IdSet<GridImp,IdentityGridGlobalIdSet<GridImp>,
-        typename RemoveConst<GridImp>::Type::HostGridType::Traits::GlobalIdSet::IdType>
+        typename remove_const<GridImp>::type::HostGridType::Traits::GlobalIdSet::IdType>
   {
 
-    typedef typename RemoveConst<GridImp>::Type::HostGridType HostGrid;
+    typedef typename remove_const<GridImp>::type::HostGridType HostGrid;
 
 
   public:
@@ -246,11 +246,11 @@ namespace Dune {
 
     //! get id of an entity
     /*
-       We use the RemoveConst to extract the Type from the mutable class,
+       We use the remove_const to extract the Type from the mutable class,
        because the const class is not instatiated yet.
      */
     template<int cd>
-    GlobalIdType id (const typename RemoveConst<GridImp>::Type::Traits::template Codim<cd>::Entity& e) const
+    GlobalIdType id (const typename remove_const<GridImp>::type::Traits::template Codim<cd>::Entity& e) const
     {
       // Return id of the host entity
       return grid_->hostgrid_->globalIdSet().id(*grid_->getRealImplementation(e).hostEntity_);
@@ -259,11 +259,11 @@ namespace Dune {
 
     //! get id of subEntity
     /*
-        We use the RemoveConst to extract the Type from the mutable class,
+        We use the remove_const to extract the Type from the mutable class,
         because the const class is not instatiated yet.
      */
     template<int cc>
-    GlobalIdType subId (const typename RemoveConst<GridImp>::Type::Traits::template Codim<0>::Entity& e, int i) const
+    GlobalIdType subId (const typename remove_const<GridImp>::type::Traits::template Codim<0>::Entity& e, int i) const
     {
       // Return sub id of the host entity
       return grid_->hostgrid_->globalIdSet().template subId<cc>(*grid_->getRealImplementation(e).hostEntity_,i);
@@ -283,11 +283,11 @@ namespace Dune {
   template<class GridImp>
   class IdentityGridLocalIdSet :
     public IdSet<GridImp,IdentityGridLocalIdSet<GridImp>,
-        typename RemoveConst<GridImp>::Type::HostGridType::Traits::LocalIdSet::IdType>
+        typename remove_const<GridImp>::type::HostGridType::Traits::LocalIdSet::IdType>
   {
   private:
 
-    typedef typename RemoveConst<GridImp>::Type::HostGridType HostGrid;
+    typedef typename remove_const<GridImp>::type::HostGridType HostGrid;
 
 
   public:
@@ -301,11 +301,11 @@ namespace Dune {
 
     //! get id of an entity
     /*
-        We use the RemoveConst to extract the Type from the mutable class,
+        We use the remove_const to extract the Type from the mutable class,
         because the const class is not instatiated yet.
      */
     template<int cd>
-    LocalIdType id (const typename RemoveConst<GridImp>::Type::Traits::template Codim<cd>::Entity& e) const
+    LocalIdType id (const typename remove_const<GridImp>::type::Traits::template Codim<cd>::Entity& e) const
     {
       // Return id of the host entity
       return grid_->hostgrid_->localIdSet().id(*grid_->getRealImplementation(e).hostEntity_);
@@ -314,11 +314,11 @@ namespace Dune {
 
     //! get id of subEntity
     /*
-     * We use the RemoveConst to extract the Type from the mutable class,
+     * We use the remove_const to extract the Type from the mutable class,
      * because the const class is not instatiated yet.
      */
     template<int cc>
-    LocalIdType subId (const typename RemoveConst<GridImp>::Type::Traits::template Codim<0>::Entity& e, int i) const
+    LocalIdType subId (const typename remove_const<GridImp>::type::template Codim<0>::Entity& e, int i) const
     {
       // Return sub id of the host entity
       return grid_->hostgrid_->localIdSet().template subId<cc>(*grid_->getRealImplementation(e).hostEntity_,i);
