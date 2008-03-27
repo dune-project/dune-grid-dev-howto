@@ -274,8 +274,6 @@ namespace Dune {
       hostgrid_->globalRefine(refCount);
     }
 
-#warning Adaptation stuff is not compiled!
-#if 0
     /** \brief Mark entity for refinement
      *
      * This only works for entities of codim 0.
@@ -288,9 +286,8 @@ namespace Dune {
      */
     bool mark(int refCount, const typename Traits::template Codim<0>::EntityPointer & e)
     {
-      return hostgrid_->mark(refCount, getHostEntity(e));
+      return hostgrid_->mark(refCount, getHostEntity<0>(*e));
     }
-
 
     /** \brief Return refinement mark for entity
      *
@@ -298,346 +295,27 @@ namespace Dune {
      */
     int getMark(const typename Traits::template Codim<0>::EntityPointer & e) const
     {
-      return hostgrid_->getMark(getHostEntity(e));
+      return hostgrid_->getMark(getHostEntity<0>(*e));
     }
 
-
     //! \todo Please doc me !
-    bool preAdapt(){
-      if (adaptationStep_==preAdaptDone)
-      {
-        std::cout << "You already called call preAdapt() ! Aborting preAdapt()." << std::endl;
-        return false;
-      }
-      if (adaptationStep_==adaptDone)
-      {
-        std::cout << "You did not call postAdapt() after adapt() ! Calling postAdapt() automatically." << std::endl;
-        postAdapt();
-      }
-      adaptationStep_ = nothingDone;
-      hostAdaptationStep_ = nothingDone;
-
-            #ifdef SUBGRID_VERBOSE
-      std::cout << "preadapt 1 (start)" << std::endl;
-            #endif
-
-      typedef typename Traits::template Codim<0>::LevelIterator ElementLevelIterator;
-      typedef typename Traits::template Codim<0>::LeafIterator ElementLeafIterator;
-      typedef typename Traits::template Codim<0>::Entity::HierarchicIterator HierarchicIterator;
-      typedef typename Traits::LevelIndexSet LevelIndexSet;
-      typedef typename Traits::template Codim<0>::Entity::EntityPointer ElementPointer;
-
-      std::vector<int> maxElementLevel(size(dim), 0);
-
-      ElementLeafIterator it = leafbegin<0>();
-      ElementLeafIterator end = leafend<0>();
-      for (; it!=end; ++it)
-      {
-        int index = levelIndexSet(it->level()).index(*it);
-        ElementPointer element = it;
-        int newLevel = it->level();
-        if (refinementMark_[it->level()][index])
-          ++newLevel;
-        if (coarseningMark_[it->level()][index])
-          --newLevel;
-
-        for (int i = 0; i<it->template count<dim>(); ++i)
-        {
-          int nodeIndex = leafIndexSet().template subIndex<dim>(*it, i);
-          if (maxElementLevel[nodeIndex] < newLevel)
-            maxElementLevel[nodeIndex] = newLevel;
-        }
-      }
-
-      // do the following twice to recognize all cases including coarsening
-      for (int i=0; i<2; ++i)
-      {
-        for (int level=maxLevel(); level>=0; --level)
-        {
-          ElementLevelIterator it = lbegin<0>(level);
-          ElementLevelIterator end = lend<0>(level);
-          for (; it!=end; ++it)
-          {
-            if(it->isLeaf())
-            {
-              int index = levelIndexSet(level).index(*it);
-
-              int maxNeighborLevel = 0;
-              for (int i = 0; i<it->template count<dim>(); ++i)
-              {
-                int nodeIndex = leafIndexSet().template subIndex<dim>(*it, i);
-                if (maxNeighborLevel < maxElementLevel[nodeIndex])
-                  maxNeighborLevel = maxElementLevel[nodeIndex];
-              }
-              int minLevel = maxNeighborLevel-maxLevelDiff_;
-              for (int i = 0; i<it->template count<dim>(); ++i)
-              {
-                int nodeIndex = leafIndexSet().template subIndex<dim>(*it, i);
-                if (maxElementLevel[nodeIndex] < minLevel)
-                  maxElementLevel[nodeIndex] = minLevel;
-              }
-
-              if ((coarseningMark_[level][index])and (level-1<minLevel))
-                coarseningMark_[level][index] = false;
-
-              if (not (coarseningMark_[level][index])and (level<minLevel))
-                refinementMark_[level][index] = true;
-            }
-          }
-        }
-      }
-
-            #ifdef SUBGRID_VERBOSE
-      std::cout << "preadapt 2 (refinement/coarsening marks for neighbours set)" << std::endl;
-            #endif
-
-      bool mightBeCoarsened = false;
-      bool callHostgridAdapt = false;
-
-      it = leafbegin<0>();
-      end = leafend<0>();
-      for (; it!=end; ++it)
-      {
-        int level = it->level();
-        int index = levelIndexSet(level).index(*it);
-
-        // if element is marked for coarsening
-        if (coarseningMark_[level][index])
-        {
-          int fatherLevel = it->father()->level();
-          int fatherIndex = levelIndexSet(fatherLevel).index(*(it->father()));
-
-          // if father is not processed
-          //    then look for brothers
-          if (not (refinementMark_[fatherLevel][fatherIndex])and not (coarseningMark_[fatherLevel][fatherIndex]))
-          {
-            // iterate over all brothers
-            HierarchicIterator hIt = it->father()->hbegin(level);
-            HierarchicIterator hEnd = it->father()->hend(level);
-            for (; hIt!=hEnd; ++hIt)
-            {
-              // if brother is not marked for coarsening
-              //    then mark father for not coarsening and stop
-              int brotherIndex = levelIndexSet(level).index(*hIt);
-              if (not (coarseningMark_[level][brotherIndex]))
-              {
-                refinementMark_[fatherLevel][fatherIndex] = true;
-                break;
-              }
-            }
-            // if father was not marked for not coarsening
-            //    then mark it for coarsening
-            if (not (refinementMark_[fatherLevel][fatherIndex]))
-              coarseningMark_[fatherLevel][fatherIndex] = true;
-          }
-
-          // if father is marked for not coarsening
-          //    then unset element mark for coarsening
-          if (refinementMark_[fatherLevel][fatherIndex])
-            coarseningMark_[level][index] = false;
-        }
-        else
-        {
-          if (refinementMark_[level][index])
-          {
-            if (getRealImplementation(*it).hostEntity_->isLeaf())
-            {
-              hostgrid_->mark(1, getRealImplementation(*it).hostEntity_);
-              callHostgridAdapt = true;
-            }
-          }
-        }
-      }
-
-            #ifdef SUBGRID_VERBOSE
-      std::cout << "preadapt 3 (checked coarsening marks, marked host grid)" << std::endl;
-            #endif
-
-      if (callHostgridAdapt)
-      {
-        hostgrid_->preAdapt();
-
-        hostAdaptationStep_ = preAdaptDone;
-
-                #ifdef SUBGRID_VERBOSE
-        std::cout << "preadapt 4 (host grid preadapt called)" << std::endl;
-                #endif
-      }
-
-      adaptationStep_ = preAdaptDone;
-
-      return mightBeCoarsened;
+    bool preAdapt() {
+      return hostgrid_->preAdapt();
     }
 
 
     //! Triggers the grid refinement process
     bool adapt()
     {
-      if ((adaptationStep_==nothingDone)or (adaptationStep_==postAdaptDone))
-      {
-        std::cout << "You did not call preAdapt() before adapt() ! Calling preAdapt() automatically." << std::endl;
-        preAdapt();
-      }
-      if (adaptationStep_==adaptDone)
-      {
-        std::cout << "You already called call adapt() ! Aborting adapt()." << std::endl;
-        return false;
-      }
-
-      typedef typename Traits::template Codim<0>::LevelIterator ElementLevelIterator;
-      typedef typename HostGrid::Traits::template Codim<0>::LevelIterator HostElementLevelIterator;
-      typedef typename HostGrid::template Codim<0>::Entity::HierarchicIterator HostHierarchicIterator;
-
-      typedef typename Traits::GlobalIdSet GlobalIdSet;
-      typedef typename GlobalIdSet::IdType GlobalIdType;
-
-            #ifdef SUBGRID_VERBOSE
-      std::cout << "adapt 1 (start)" << std::endl;
-            #endif
-
-      std::map<GlobalIdType, bool> elements;
-      for(int level=0; level <= maxLevel(); ++level)
-      {
-        ElementLevelIterator it = lbegin<0>(level);
-        ElementLevelIterator end = lend<0>(level);
-        for (; it!=end; ++it)
-        {
-          int level = it->level();
-          int index = levelIndexSet(level).index(*it);
-
-          // if element is leaf
-          //    then if not marked for coarsening store it and its refinement mark
-          // if element is not leaf
-          //    then store it and ignore refinement mark
-          if (it->isLeaf())
-          {
-
-            if (not (coarseningMark_[level][index]))
-              elements[globalIdSet().id(*it)] = refinementMark_[level][index];
-          }
-          else
-            elements[globalIdSet().id(*it)] = false;
-        }
-      }
-
-            #ifdef SUBGRID_VERBOSE
-      std::cout << "adapt 2 (element ids stored)" << std::endl;
-            #endif
-
-      if (hostAdaptationStep_==preAdaptDone)
-      {
-        hostgrid_->adapt();
-
-        hostAdaptationStep_ = adaptDone;
-
-                #ifdef SUBGRID_VERBOSE
-        std::cout << "adapt 3 (host grid adapt called)" << std::endl;
-                #endif
-      }
-
-      createBegin();
-      // recreate entity mark vectors
-
-      // mark entities
-      for(int level=0; level <= hostgrid_->maxLevel(); ++level)
-      {
-        HostElementLevelIterator it = hostgrid_->lbegin<0>(level);
-        HostElementLevelIterator end = hostgrid_->lend<0>(level);
-        for (; it!=end; ++it)
-        {
-          typename std::map<GlobalIdType, bool>::iterator contained = elements.find(hostgrid_->globalIdSet().id(*it));
-          if (contained != elements.end())
-          {
-            add(it);
-            if (contained->second)
-            {
-              HostHierarchicIterator hIt = it->hbegin(it->level()+1);
-              HostHierarchicIterator hEnd = it->hend(it->level()+1);
-              for (; hIt!=hEnd; ++hIt)
-                add(hIt);
-            }
-          }
-        }
-      }
-
-            #ifdef SUBGRID_VERBOSE
-      std::cout << "adapt 4 (subgrid elements added)" << std::endl;
-            #endif
-
-      createEnd();
-
-            #ifdef SUBGRID_VERBOSE
-      std::cout << "adapt 5 (subgrid created)" << std::endl;
-            #endif
-
-      for(int level=0; level < maxLevel(); ++level)
-      {
-        ElementLevelIterator it = lbegin<0>(level);
-        ElementLevelIterator end = lend<0>(level);
-        for (; it!=end; ++it)
-        {
-          typename std::map<GlobalIdType, bool>::const_iterator e = elements.find(globalIdSet().id(*it));
-          if (e != elements.end())
-          {
-            if (e->second == true)
-              refinementMark_[level][levelIndexSet(level).index(*it)] = true;
-          }
-        }
-      }
-
-            #ifdef SUBGRID_VERBOSE
-      std::cout << "adapt 6 (wasRefined marks set)" << std::endl;
-            #endif
-
-      adaptationStep_ = adaptDone;
-
-      return true;
+      return hostgrid_->adapt();
     }
 
-
     /** \brief Clean up refinement markers */
-    void postAdapt(){
-      if (adaptationStep_==nothingDone)
-      {
-        std::cout << "You did not call preAdapt() before adapt() ! Calling preAdapt() automatically." << std::endl;
-        preAdapt();
-      }
-      if (adaptationStep_==preAdaptDone)
-      {
-        std::cout << "You did not call adapt() before postAdaptt() ! Calling adapt() automatically." << std::endl;
-        adapt();
-      }
-      if (adaptationStep_==postAdaptDone)
-      {
-        std::cout << "You already called call postAdapt() ! Aborting postAdapt()." << std::endl;
-        return;
-      }
-
-            #ifdef SUBGRID_VERBOSE
-      std::cout << "postadapt 1 (start)" << std::endl;
-            #endif
-
-      for (int level=0; level<=maxLevel(); ++level)
-        refinementMark_[level].unsetAll();
-
-      if (hostAdaptationStep_ == adaptDone)
-      {
-        hostgrid_->postAdapt();
-
-        hostAdaptationStep_ = postAdaptDone;
-
-                #ifdef SUBGRID_VERBOSE
-        std::cout << "postadapt 2 (host grid postadapt called)" << std::endl;
-                #endif
-      }
-
-      adaptationStep_ = postAdaptDone;
-
-      return;
+    void postAdapt() {
+      return hostgrid_->postAdapt();
     }
 
     /*@}*/
-#endif
 
     /** \brief Size of the overlap on the leaf level */
     unsigned int overlapSize(int codim) const {
