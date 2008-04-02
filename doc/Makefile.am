@@ -12,10 +12,12 @@ EXTRA_DIST = Makefile.dist.in Makefile.dist.am
 
 # setting like in dune-web
 BASEDIR=../..
-CURDIR=doc/subgrid
-docdir=$(datadir)/doc/dune-subgrid
+CURDIR=doc/grid-dev-howto
+docdir=$(datadir)/doc/dune-grid-dev-howto
 
-doc_DATA = $(DOCS)
+doc_DATA = $(DOCS) grid-dev-howto.pdf
+
+EXTRAINSTALL = grid-dev-howto.pdf
 
 CLEANFILES = *.aux *.bbl *.blg *.log *.out *.toc *.dvi *.ps
 

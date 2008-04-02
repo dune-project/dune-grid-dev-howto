@@ -1,0 +1,103 @@
+\documentclass[11pt,a4paper,headinclude,footinclude,DIV16,normalheadings]{scrreprt}
+\usepackage[automark]{scrpage2}
+\usepackage[ansinew]{inputenc}
+%\usepackage{german}
+%\usepackage{bibgerm}
+\usepackage{amsmath}
+\usepackage{amsfonts}
+\usepackage{theorem}
+\usepackage{color}
+\usepackage{listings}
+\usepackage{xspace}
+\lstset{language=C++, basicstyle=\ttfamily, 
+  keywordstyle=\color{black}\bfseries, tabsize=4, stringstyle=\ttfamily,
+  commentstyle=\it, extendedchars=true, escapeinside={/*@}{@*/}}
+\usepackage{hyperref}
+\usepackage{psfrag}
+\usepackage{makeidx}
+
+\usepackage{graphicx}
+
+
+\DeclareGraphicsExtensions{.eps, .jpg}
+
+\newcommand{\C}{\mathbb{C}}
+\newcommand{\R}{\mathbb{R}}
+\newcommand{\N}{\mathbb{N}}
+\newcommand{\Z}{\mathbb{Z}}
+\newcommand{\Q}{\mathbb{Q}}
+\newcommand{\Dune}{{\sf\bfseries DUNE}\xspace}
+
+%The theorems
+\theorembodyfont{\upshape}
+\theoremheaderfont{\sffamily\bfseries}
+\newtheorem{exc}{Exercise}[chapter]
+\newtheorem{rem}[exc]{Remark}
+\newtheorem{lst}{Listing}
+\newtheorem{warn}[exc]{Warning}
+
+\pagestyle{scrheadings}
+
+\title{The Distributed and Unified Numerics Environment (\Dune{}) \\
+Tutorial on Implementing New Grid Managers}
+
+\author{Peter Bastian$^\ast$ \and 
+Markus Blatt$^\ast$ \and
+Andreas Dedner$^\dagger$ \and 
+Christian Engwer$^\ast$ \and  
+Robert Kl\"ofkorn$^\dagger$ \and 
+Mario Ohlberger$^\dagger$ \and  
+Oliver Sander$^\ddagger$}
+
+\date{\today}
+
+\publishers{%
+\vspace{10mm}
+%\includegraphics[width=0.32\textwidth]{EPS/ug2dtri-view2}\hfill
+%\includegraphics[width=0.32\textwidth]{EPS/adaptiveintegration_alberta2d}\hfill
+%\includegraphics[width=0.32\textwidth]{EPS/alucube3d}
+%\\
+\vspace{10mm}
+{\normalsize $^\ast$Abteilung `Simulation gro\ss er Systeme',
+Universit\"at Stuttgart,\\
+Universit\"atsstr.~38, D-70569 Stuttgart, Germany}\\
+%
+\bigskip
+{\normalsize $^\dagger$Abteilung f\"ur Angewandte Mathematik, Universit\"at Freiburg,\\
+Hermann-Herder-Str.~10, D-79104 Freiburg, Germany}\\
+%
+\bigskip
+{\normalsize $^\ddagger$Institut f\"ur Mathematik II,\\ Freie Universit\"at Berlin,
+Arnimallee 2-6, D-14195 Berlin, Germany}\\
+%
+\bigskip
+{\normalsize \texttt{\url{http://www.dune-project.org/}}}\\
+}
+
+\makeindex
+
+\begin{document}
+
+\maketitle
+
+\begin{abstract}
+This document explains how new grid managers for the \Dune grid interface
+can be implemented and how existing grid codes can be made to work with
+\Dune.  Unfortunately, it is in a very early stage :-)
+\end{abstract}
+
+\tableofcontents
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\chapter{Introduction}
+
+foo
+
+\bibliographystyle{plain}
+\bibliography{grid-dev-howto}
+
+\printindex
+
+\end{document}
