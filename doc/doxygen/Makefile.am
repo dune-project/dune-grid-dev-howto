@@ -87,7 +87,7 @@ html-dist: $(DOXYGENHEADERBUILD)
 
 # how to install the doxygen documentation
 doxygen-install:
-	if test -d $(DUNEWEBDIR) && test -r $(DUNEWEBDIR)/Make.global ; then \
+	if test -d html && test -d $(DUNEWEBDIR) && test -r $(DUNEWEBDIR)/Make.global ; then \
 	  pushd html; \
 	    $(MAKE) -f $(DUNEWEBDIR)/Make.global \
           EXTRAINSTALL="$(DOXYGENINSTALL)" CURDIR="$(CURDIR)/dune-subgrid-html" install ; \
