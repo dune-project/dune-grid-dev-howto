@@ -12,44 +12,6 @@
 
 namespace Dune {
 
-
-
-  // forward declaration
-  template<int mydim, int coorddim, class GridImp>
-  class IdentityGridGeometry;
-
-
-
-
-  template<int mydim, int coorddim, class GridImp>
-  class IdentityGridMakeableGeometry :
-    public Geometry<mydim, coorddim, GridImp, IdentityGridGeometry>
-  {
-  public:
-
-    // The codimension of this entitypointer wrt the host grid
-    enum {CodimInHostGrid = GridImp::HostGridType::dimension - mydim};
-
-    enum {DimensionWorld = GridImp::HostGridType::dimensionworld};
-
-    typedef typename GridImp::HostGridType::Traits::template Codim<CodimInHostGrid>::Geometry HostGridGeometryType;
-
-    typedef typename GridImp::HostGridType::Traits::template Codim<CodimInHostGrid>::Geometry HostGridLocalGeometryType;
-
-    // select appropiate hostgrid geometry via typeswitch
-    typedef typename SelectType<coorddim==DimensionWorld, HostGridGeometryType, HostGridLocalGeometryType>::Type HostGridGeometry;
-
-
-    //! \todo Please doc me !
-    IdentityGridMakeableGeometry(const HostGridGeometry& hostGeometry)
-      : Geometry<mydim, coorddim, GridImp, IdentityGridGeometry>(IdentityGridGeometry<mydim, coorddim, GridImp>(hostGeometry))
-    {};
-
-  };
-
-
-
-
   template<int mydim, int coorddim, class GridImp>
   class IdentityGridGeometry :
     public GeometryDefaultImplementation <mydim, coorddim, GridImp, IdentityGridGeometry>

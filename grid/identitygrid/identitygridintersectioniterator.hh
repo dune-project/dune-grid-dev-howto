@@ -79,32 +79,32 @@ namespace Dune {
     //! return EntityPointer to the Entity on the inside of this intersection
     //! (that is the Entity where we started this Iterator)
     EntityPointer inside() const {
-      return IdentityGridEntityPointer<0,GridImp> (identityGrid_, hostIterator_.inside());
+      return IdentityGridEntityPointer<0,GridImp> (identityGrid_, hostIterator_->inside());
     }
 
 
     //! return EntityPointer to the Entity on the outside of this intersection
     //! (that is the neighboring Entity)
     EntityPointer outside() const {
-      return IdentityGridEntityPointer<0,GridImp> (identityGrid_, hostIterator_.outside());
+      return IdentityGridEntityPointer<0,GridImp> (identityGrid_, hostIterator_->outside());
     }
 
 
     //! return true if intersection is with boundary.
     bool boundary () const {
-      return hostIterator_.boundary();
+      return hostIterator_->boundary();
     }
 
 
     //! return true if across the edge an neighbor on this level exists
     bool neighbor () const {
-      return hostIterator_.neighbor();
+      return hostIterator_->neighbor();
     }
 
 
     //! return information about the Boundary
     int boundaryId () const {
-      return hostIterator_.boundaryId();
+      return hostIterator_->boundaryId();
     }
 
 
@@ -114,7 +114,7 @@ namespace Dune {
     //! where iteration started.
     const LocalGeometry& intersectionSelfLocal () const {
       if (selfLocal_ == NULL)
-        selfLocal_ = new IdentityGridMakeableGeometry<dim-1,dim,GridImp>(hostIterator_.intersectionSelfLocal());
+        selfLocal_ = new MakeableInterfaceObject<LocalGeometry>(hostIterator_->intersectionSelfLocal());
 
       return *selfLocal_;
     }
@@ -123,7 +123,7 @@ namespace Dune {
     //! Here returned element is in LOCAL coordinates of neighbor
     const LocalGeometry& intersectionNeighborLocal () const {
       if (neighborLocal_ == NULL)
-        neighborLocal_ = new IdentityGridMakeableGeometry<dim-1,dim,GridImp>(hostIterator_.intersectionNeighborLocal());
+        neighborLocal_ = new MakeableInterfaceObject<LocalGeometry>(hostIterator_->intersectionNeighborLocal());
 
       return *neighborLocal_;
     }
@@ -132,7 +132,7 @@ namespace Dune {
     //! Here returned element is in GLOBAL coordinates of the element where iteration started.
     const Geometry& intersectionGlobal () const {
       if (intersectionGlobal_ == NULL)
-        intersectionGlobal_ = new IdentityGridMakeableGeometry<dim-1,dimworld,GridImp>(hostIterator_.intersectionGlobal());
+        intersectionGlobal_ = new MakeableInterfaceObject<Geometry>(hostIterator_->intersectionGlobal());
 
       return *intersectionGlobal_;
     }
@@ -140,22 +140,20 @@ namespace Dune {
 
     //! local number of codim 1 entity in self where intersection is contained in
     int numberInSelf () const {
-      return hostIterator_.numberInSelf();
+      return hostIterator_->numberInSelf();
     }
 
 
     //! local number of codim 1 entity in neighbor where intersection is contained
     int numberInNeighbor () const {
-      return hostIterator_.numberInNeighbor();
+      return hostIterator_->numberInNeighbor();
     }
 
 
     //! return outer normal, this should be dependent on local
     //! coordinates for higher order boundary
-    const FieldVector<ctype, GridImp::dimensionworld>& outerNormal (const FieldVector<ctype, GridImp::dimension-1>& local) const {
-      /** \todo Why do I get 'returning reference to temporary' when not doing this copying? */
-      outerNormal_ = hostIterator_.outerNormal(local);
-      return outerNormal_;
+    FieldVector<ctype, GridImp::dimensionworld> outerNormal (const FieldVector<ctype, GridImp::dimension-1>& local) const {
+      return hostIterator_->outerNormal(local);
     }
 
 
@@ -164,17 +162,14 @@ namespace Dune {
     //  private methods
     //**********************************************************
 
-    //! vector storing the outer normal
-    mutable FieldVector<typename GridImp::ctype, dimworld> outerNormal_;
-
     //! pointer to element holding the selfLocal and selfGlobal information.
     //! This element is created on demand.
-    mutable IdentityGridMakeableGeometry<dim-1,dim,GridImp>* selfLocal_;
-    mutable IdentityGridMakeableGeometry<dim-1,dim,GridImp>* neighborLocal_;
+    mutable MakeableInterfaceObject<LocalGeometry>* selfLocal_;
+    mutable MakeableInterfaceObject<LocalGeometry>* neighborLocal_;
 
     //! pointer to element holding the neighbor_global and neighbor_local
     //! information.
-    mutable IdentityGridMakeableGeometry<dim-1,dimworld,GridImp>* intersectionGlobal_;
+    mutable MakeableInterfaceObject<Geometry>* intersectionGlobal_;
 
     const GridImp* identityGrid_;
 
@@ -244,33 +239,33 @@ namespace Dune {
     //! return EntityPointer to the Entity on the inside of this intersection
     //! (that is the Entity where we started this Iterator)
     EntityPointer inside() const {
-      return IdentityGridEntityPointer<0,GridImp> (identityGrid_, hostIterator_.inside());
+      return IdentityGridEntityPointer<0,GridImp> (identityGrid_, hostIterator_->inside());
     }
 
 
     //! return EntityPointer to the Entity on the outside of this intersection
     //! (that is the neighboring Entity)
     EntityPointer outside() const {
-      return IdentityGridEntityPointer<0,GridImp> (identityGrid_, hostIterator_.outside());
+      return IdentityGridEntityPointer<0,GridImp> (identityGrid_, hostIterator_->outside());
     }
 
 
     /** \brief return true if intersection is with boundary.
      */
     bool boundary () const {
-      return hostIterator_.boundary();
+      return hostIterator_->boundary();
     }
 
 
     //! return true if across the edge an neighbor on this level exists
     bool neighbor () const {
-      return hostIterator_.neighbor();
+      return hostIterator_->neighbor();
     }
 
 
     //! return information about the Boundary
     int boundaryId () const {
-      return hostIterator_.boundaryId();
+      return hostIterator_->boundaryId();
     }
 
 
@@ -280,7 +275,7 @@ namespace Dune {
     //! where iteration started.
     const LocalGeometry& intersectionSelfLocal () const {
       if (selfLocal_ == NULL)
-        selfLocal_ = new IdentityGridMakeableGeometry<dim-1,dim,GridImp>(hostIterator_.intersectionSelfLocal());
+        selfLocal_ = new MakeableInterfaceObject<LocalGeometry>(hostIterator_->intersectionSelfLocal());
 
       return *selfLocal_;
     }
@@ -289,7 +284,7 @@ namespace Dune {
     //! Here returned element is in LOCAL coordinates of neighbor
     const LocalGeometry& intersectionNeighborLocal () const {
       if (neighborLocal_ == NULL)
-        neighborLocal_ = new IdentityGridMakeableGeometry<dim-1,dim,GridImp>(hostIterator_.intersectionNeighborLocal());
+        neighborLocal_ = new MakeableInterfaceObject<LocalGeometry>(hostIterator_->intersectionNeighborLocal());
 
       return *neighborLocal_;
     }
@@ -298,7 +293,7 @@ namespace Dune {
     //! Here returned element is in GLOBAL coordinates of the element where iteration started.
     const Geometry& intersectionGlobal () const {
       if (intersectionGlobal_ == NULL)
-        intersectionGlobal_ = new IdentityGridMakeableGeometry<dim-1,dimworld,GridImp>(hostIterator_.intersectionGlobal());
+        intersectionGlobal_ = new MakeableInterfaceObject<Geometry>(hostIterator_->intersectionGlobal());
 
       return *intersectionGlobal_;
     }
@@ -306,37 +301,32 @@ namespace Dune {
 
     //! local number of codim 1 entity in self where intersection is contained in
     int numberInSelf () const {
-      return hostIterator_.numberInSelf();
+      return hostIterator_->numberInSelf();
     }
 
 
     //! local number of codim 1 entity in neighbor where intersection is contained
     int numberInNeighbor () const {
-      return hostIterator_.numberInNeighbor();
+      return hostIterator_->numberInNeighbor();
     }
 
 
     //! return outer normal, this should be dependent on local
     //! coordinates for higher order boundary
-    const FieldVector<ctype, dimworld>& outerNormal (const FieldVector<ctype, dim-1>& local) const {
-      /** \todo Why do I get 'returning reference to temporary' when not doing this copying? */
-      outerNormal_ = hostIterator_.outerNormal(local);
-      return outerNormal_;
+    FieldVector<ctype, dimworld> outerNormal (const FieldVector<ctype, dim-1>& local) const {
+      return hostIterator_->outerNormal(local);
     }
 
   private:
 
-    //! vector storing the outer normal
-    mutable FieldVector<typename GridImp::ctype, dimworld> outerNormal_;
-
     //! pointer to element holding the selfLocal and selfGlobal information.
     //! This element is created on demand.
-    mutable IdentityGridMakeableGeometry<dim-1,dim,GridImp>* selfLocal_;
-    mutable IdentityGridMakeableGeometry<dim-1,dim,GridImp>* neighborLocal_;
+    mutable MakeableInterfaceObject<LocalGeometry>* selfLocal_;
+    mutable MakeableInterfaceObject<LocalGeometry>* neighborLocal_;
 
     //! pointer to element holding the neighbor_global and neighbor_local
     //! information.
-    mutable IdentityGridMakeableGeometry<dim-1,dimworld,GridImp>* intersectionGlobal_;
+    mutable MakeableInterfaceObject<Geometry>* intersectionGlobal_;
 
     const GridImp* identityGrid_;
 

@@ -205,7 +205,7 @@ namespace Dune {
     const Geometry& geometry () const
     {
       if (geo_==0)
-        geo_ = new IdentityGridMakeableGeometry<dim-codim,GridImp::dimensionworld,GridImp>(hostEntity_->geometry());
+        geo_ = new MakeableInterfaceObject<Geometry>(hostEntity_->geometry());
       return *geo_;
     }
 
@@ -235,8 +235,8 @@ namespace Dune {
     const GridImp* identityGrid_;
 
     //! the current geometry
-    mutable IdentityGridMakeableGeometry<dim-codim,GridImp::dimensionworld,GridImp> *geo_;
-    mutable IdentityGridMakeableGeometry<dim-codim,dim,GridImp> *geoInFather_;
+    mutable MakeableInterfaceObject<Geometry> *geo_;
+    mutable MakeableInterfaceObject<Geometry> *geoInFather_;
   };
 
 
@@ -354,7 +354,7 @@ namespace Dune {
     {
       if (geo_==0)
       {
-        geo_ = new IdentityGridMakeableGeometry<dim,GridImp::dimensionworld,GridImp>(hostEntity_->geometry());
+        geo_ = new MakeableInterfaceObject<Geometry>(hostEntity_->geometry());
       }
       return *geo_;
     }
@@ -430,7 +430,7 @@ namespace Dune {
      */
     const LocalGeometry& geometryInFather () const {
       if (geoInFather_==0)
-        geoInFather_ = new IdentityGridMakeableGeometry<dim,dim,GridImp>(hostEntity_->geometryInFather());
+        geoInFather_ = new MakeableInterfaceObject<LocalGeometry>(hostEntity_->geometryInFather());
       return *geoInFather_;
     }
 
@@ -496,10 +496,10 @@ namespace Dune {
     const GridImp* identityGrid_;
 
     //! the current geometry
-    mutable IdentityGridMakeableGeometry<dim,GridImp::dimensionworld,GridImp> *geo_;
+    mutable MakeableInterfaceObject<Geometry> *geo_;
 
     //! \todo Please doc me !
-    mutable IdentityGridMakeableGeometry<dim,dim,GridImp> *geoInFather_;
+    mutable MakeableInterfaceObject<LocalGeometry> *geoInFather_;
 
     //! \todo Please doc me !
     HostGridEntityPointer hostEntity_;

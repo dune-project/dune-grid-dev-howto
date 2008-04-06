@@ -46,8 +46,10 @@ namespace Dune {
         IdentityGridEntity,
         IdentityGridEntityPointer,
         IdentityGridLevelIterator,
-        IdentityGridLeafIntersectionIterator,
-        IdentityGridLevelIntersectionIterator,
+        IdentityGridLeafIntersectionIterator,  // leaf  intersection
+        IdentityGridLevelIntersectionIterator, // level  intersection
+        IdentityGridLeafIntersectionIterator,  // leaf  intersection iterator
+        IdentityGridLevelIntersectionIterator, // level  intersection iterator
         IdentityGridHierarchicIterator,
         IdentityGridLeafIterator,
         IdentityGridLevelIndexSet< const IdentityGrid<HostGrid> >,
