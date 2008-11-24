@@ -140,7 +140,7 @@ namespace Dune {
 
     /*
      * We use the remove_const to extract the Type from the mutable class,
-     * because the const class is not instatiated yet.
+     * because the const class is not instantiated yet.
      */
     enum {dim = remove_const<GridImp>::type::dimension};
 
@@ -156,7 +156,7 @@ namespace Dune {
     //! get index of an entity
     /*
         We use the RemoveConst to extract the Type from the mutable class,
-        because the const class is not instatiated yet.
+        because the const class is not instantiated yet.
      */
     template<int codim>
     int index (const typename remove_const<GridImp>::type::template Codim<codim>::Entity& e) const
@@ -168,7 +168,7 @@ namespace Dune {
     //! get index of subEntity of a codim 0 entity
     /*
         We use the RemoveConst to extract the Type from the mutable class,
-        because the const class is not instatiated yet.
+        because the const class is not instantiated yet.
      */
     template<int codim>
     int subIndex (const typename remove_const<GridImp>::type::Traits::template Codim<0>::Entity& e, int i) const
@@ -247,7 +247,7 @@ namespace Dune {
     //! get id of an entity
     /*
        We use the remove_const to extract the Type from the mutable class,
-       because the const class is not instatiated yet.
+       because the const class is not instantiated yet.
      */
     template<int cd>
     GlobalIdType id (const typename remove_const<GridImp>::type::Traits::template Codim<cd>::Entity& e) const
@@ -260,7 +260,7 @@ namespace Dune {
     //! get id of subEntity
     /*
         We use the remove_const to extract the Type from the mutable class,
-        because the const class is not instatiated yet.
+        because the const class is not instantiated yet.
      */
     template<int cc>
     GlobalIdType subId (const typename remove_const<GridImp>::type::Traits::template Codim<0>::Entity& e, int i) const
@@ -302,7 +302,7 @@ namespace Dune {
     //! get id of an entity
     /*
         We use the remove_const to extract the Type from the mutable class,
-        because the const class is not instatiated yet.
+        because the const class is not instantiated yet.
      */
     template<int cd>
     LocalIdType id (const typename remove_const<GridImp>::type::Traits::template Codim<cd>::Entity& e) const
@@ -315,7 +315,7 @@ namespace Dune {
     //! get id of subEntity
     /*
      * We use the remove_const to extract the Type from the mutable class,
-     * because the const class is not instatiated yet.
+     * because the const class is not instantiated yet.
      */
     template<int cc>
     LocalIdType subId (const typename remove_const<GridImp>::type::template Codim<0>::Entity& e, int i) const
