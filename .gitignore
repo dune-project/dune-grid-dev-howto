@@ -9,6 +9,7 @@ install-sh
 missing
 mkinstalldirs
 libtool
+dependencies.m4
 dune-grid-dev-howto.pc
 semantic.cache
 configure.lineno
