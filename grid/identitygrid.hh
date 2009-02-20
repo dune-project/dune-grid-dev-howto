@@ -12,7 +12,6 @@
 
 #include <dune/common/collectivecommunication.hh>
 #include <dune/grid/common/capabilities.hh>
-#include <dune/common/bitfield.hh>
 #include <dune/grid/common/grid.hh>
 #include <dune/common/timer.hh>
 
