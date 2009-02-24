@@ -13,8 +13,7 @@ namespace Dune {
   /** Acts as a pointer to an  entities of a given codimension.
    */
   template<int codim, class GridImp>
-  class IdentityGridEntityPointer :
-    public EntityPointerDefaultImplementation <codim, GridImp, Dune::IdentityGridEntityPointer<codim,GridImp> >
+  class IdentityGridEntityPointer
   {
   private:
 
@@ -22,6 +21,13 @@ namespace Dune {
 
 
   public:
+
+    //! export the type of the EntityPointer Implementation.
+    //! Necessary for the typeconversion between Iterators and EntityPointer
+    typedef IdentityGridEntityPointer EntityPointerImp;
+
+    /** \brief Codimension of entity pointed to */
+    enum { codimension = codim };
 
     typedef typename GridImp::template Codim<codim>::Entity Entity;
 
