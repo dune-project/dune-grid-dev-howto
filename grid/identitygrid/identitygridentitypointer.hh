@@ -40,6 +40,11 @@ namespace Dune {
       virtualEntity_(identityGrid, hostEntity_)
     {}
 
+    //! Constructor from an IdentityGrid entity
+    IdentityGridEntityPointer (const IdentityGridEntity<codim,dim,GridImp>& entity)
+      : identityGrid_(entity.identityGrid_),
+        virtualEntity_(entity.identityGrid_, entity.hostEntity_)
+    {}
 
     //! equality
     bool equals(const IdentityGridEntityPointer<codim,GridImp>& i) const {
@@ -52,6 +57,10 @@ namespace Dune {
       return virtualEntity_;
     }
 
+    //! Make this pointer as small as possible
+    void compactify () {
+      //virtualEntity_.getTarget().compactify();
+    }
 
     //! ask for level of entity
     int level () const {
