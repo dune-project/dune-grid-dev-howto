@@ -21,8 +21,7 @@ namespace Dune {
    */
   template<class GridImp>
   class IdentityGridHierarchicIterator :
-    public Dune::IdentityGridEntityPointer <0,GridImp>,
-    public HierarchicIteratorDefaultImplementation <GridImp,IdentityGridHierarchicIterator>
+    public Dune::IdentityGridEntityPointer <0,GridImp>
   {
   public:
 
