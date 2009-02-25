@@ -107,6 +107,8 @@ namespace Dune {
     template <class GridImp_, int EntityDim>
     friend class IndexSetter;
 
+    friend class IdentityGridEntityPointer<codim,GridImp>;
+
 
   private:
 

@@ -20,8 +20,7 @@ namespace Dune {
    */
   template<int codim, PartitionIteratorType pitype, class GridImp>
   class IdentityGridLevelIterator :
-    public Dune::IdentityGridEntityPointer <codim,GridImp>,
-    public LevelIteratorDefaultImplementation <codim,pitype,GridImp,IdentityGridLevelIterator>
+    public Dune::IdentityGridEntityPointer <codim,GridImp>
   {
   private:
 

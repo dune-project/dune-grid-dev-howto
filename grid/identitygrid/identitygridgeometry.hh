@@ -88,7 +88,7 @@ namespace Dune {
 
 
     //! The Jacobian matrix of the mapping from the reference element to this element
-    const FieldMatrix<ctype, mydim,mydim>& jacobianInverseTransposed (const FieldVector<ctype, mydim>& local) const {
+    const FieldMatrix<ctype, coorddim,mydim>& jacobianInverseTransposed (const FieldVector<ctype, mydim>& local) const {
       return hostGeometry_.jacobianInverseTransposed(local);
     }
 
