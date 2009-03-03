@@ -20,6 +20,7 @@ AC_CONFIG_FILES([Makefile
     grid/identitygrid/Makefile
     grid/test/Makefile
     doc/doxygen/Makefile
+    doc/doxygen/Doxyfile
     doc/Makefile
     doc/Makefile.dist
     dune-grid-dev-howto.pc])
