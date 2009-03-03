@@ -2,6 +2,7 @@
 doxy-header.html
 doxygen-tag
 doxygen.log
+Doxyfile
 html
 latex
 Makefile
