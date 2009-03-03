@@ -460,10 +460,7 @@ WARN_LOGFILE           =
 # directories like "/usr/src/myproject". Separate the files or directories 
 # with spaces.
 
-INPUT                  = @srcdir@/mainpage \
-                         @srcdir@/modules \
-                         @top_srcdir@/grid/modules \
-                         @top_srcdir@/grid/identitygrid \
+INPUT                  = @top_srcdir@/grid/identitygrid \
                          @top_srcdir@/grid/identitygrid.hh
 
 # If the value of the INPUT tag contains directories, you can use the 
