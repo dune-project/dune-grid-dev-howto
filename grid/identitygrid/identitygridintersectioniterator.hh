@@ -112,6 +112,16 @@ namespace Dune {
       return hostIterator_->boundaryId();
     }
 
+    //! Return true if this is a conforming intersection
+    bool conforming () const {
+      return hostIterator_->conforming();
+    }
+
+    //! Geometry type of an intersection
+    GeometryType type () const {
+      return hostIterator_->type();
+    }
+
 
     //! intersection of codimension 1 of this neighbor with element where
     //! iteration started.
@@ -284,6 +294,16 @@ namespace Dune {
     //! return information about the Boundary
     int boundaryId () const {
       return hostIterator_->boundaryId();
+    }
+
+    //! Return true if this is a conforming intersection
+    bool conforming () const {
+      return hostIterator_->conforming();
+    }
+
+    //! Geometry type of an intersection
+    GeometryType type () const {
+      return hostIterator_->type();
     }
 
 

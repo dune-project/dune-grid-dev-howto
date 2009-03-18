@@ -41,7 +41,7 @@ namespace Dune {
 
     enum {dim = GridImp::dimension};
 
-    typedef IndexSet<GridImp,IdentityGridLevelIndexSet<GridImp>,IdentityGridLevelIndexSetTypes<GridImp> > Base;
+    typedef IndexSetDefaultImplementation<GridImp,IdentityGridLevelIndexSet<GridImp>,IdentityGridLevelIndexSetTypes<GridImp> > Base;
 
     //! get index of an entity
     template<int codim>
@@ -144,7 +144,7 @@ namespace Dune {
      */
     enum {dim = remove_const<GridImp>::type::dimension};
 
-    typedef IndexSet<GridImp,IdentityGridLeafIndexSet<GridImp>,IdentityGridLeafIndexSetTypes<GridImp> > Base;
+    typedef IndexSetDefaultImplementation<GridImp,IdentityGridLeafIndexSet<GridImp>,IdentityGridLeafIndexSetTypes<GridImp> > Base;
 
 
     //! constructor stores reference to a grid and level
