@@ -11,37 +11,16 @@
 
 namespace Dune {
 
-
-  template <class GridImp>
-  struct IdentityGridLevelIndexSetTypes
-  {
-    //! The types
-    template<int cd>
-    struct Codim
-    {
-      template<PartitionIteratorType pitype>
-      struct Partition
-      {
-        typedef typename GridImp::template Codim<cd>::template Partition<pitype>::LevelIterator Iterator;
-      };
-    };
-  };
-
-
-
-
   /** \todo Take the index types from the host grid */
   template<class GridImp>
   class IdentityGridLevelIndexSet :
-    public IndexSetDefaultImplementation<GridImp,IdentityGridLevelIndexSet<GridImp>,IdentityGridLevelIndexSetTypes<GridImp> >
+    public IndexSet<GridImp,IdentityGridLevelIndexSet<GridImp> >
   {
   public:
 
     typedef typename remove_const<GridImp>::type::HostGridType HostGrid;
 
     enum {dim = GridImp::dimension};
-
-    typedef IndexSetDefaultImplementation<GridImp,IdentityGridLevelIndexSet<GridImp>,IdentityGridLevelIndexSetTypes<GridImp> > Base;
 
     //! get index of an entity
     template<int codim>
@@ -78,22 +57,12 @@ namespace Dune {
       return grid_->hostgrid_->levelIndexSet(level_).geomTypes(codim);
     }
 
-
-    //! one past the end on this level
-    template<int cd, PartitionIteratorType pitype>
-    typename Base::template Codim<cd>::template Partition<pitype>::Iterator begin () const
+    /** \brief Return true if the given entity is contained in the index set */
+    template<class EntityType>
+    bool contains (const EntityType& e) const
     {
-      return grid_->template lbegin<cd,pitype>(level_);
+      return grid_->hostgrid_->levelIndexSet(level_).contains(*grid_->template getHostEntity<EntityType::codimension>(e));
     }
-
-
-    //! Iterator to one past the last entity of given codim on level for partition type
-    template<int cd, PartitionIteratorType pitype>
-    typename Base::template Codim<cd>::template Partition<pitype>::Iterator end () const
-    {
-      return grid_->template lend<cd,pitype>(level_);
-    }
-
 
     /** \brief Set up the index set */
     void update(const GridImp& grid, int level)
@@ -109,29 +78,9 @@ namespace Dune {
   };
 
 
-
-
-  template <class GridImp>
-  struct IdentityGridLeafIndexSetTypes
-  {
-    //! The types
-    template<int cd>
-    struct Codim
-    {
-      template<PartitionIteratorType pitype>
-      struct Partition
-      {
-        typedef typename GridImp::template Codim<cd>::template Partition<pitype>::LeafIterator Iterator;
-      };
-    };
-  };
-
-
-
-
   template<class GridImp>
   class IdentityGridLeafIndexSet :
-    public IndexSetDefaultImplementation<GridImp,IdentityGridLeafIndexSet<GridImp>,IdentityGridLeafIndexSetTypes<GridImp> >
+    public IndexSet<GridImp,IdentityGridLeafIndexSet<GridImp> >
   {
     typedef typename remove_const<GridImp>::type::HostGridType HostGrid;
 
@@ -143,8 +92,6 @@ namespace Dune {
      * because the const class is not instantiated yet.
      */
     enum {dim = remove_const<GridImp>::type::dimension};
-
-    typedef IndexSetDefaultImplementation<GridImp,IdentityGridLeafIndexSet<GridImp>,IdentityGridLeafIndexSetTypes<GridImp> > Base;
 
 
     //! constructor stores reference to a grid and level
@@ -197,21 +144,13 @@ namespace Dune {
       return grid_->hostgrid_->leafIndexSet().geomTypes(codim);
     }
 
-
-    //! one past the end on this level
-    template<int codim, PartitionIteratorType pitype>
-    typename Base::template Codim<codim>::template Partition<pitype>::Iterator begin () const
+    /** \brief Return true if the given entity is contained in the index set */
+    template<class EntityType>
+    bool contains (const EntityType& e) const
     {
-      return grid_->template leafbegin<codim,pitype>();
+      return grid_->hostgrid_->leafIndexSet().contains(*grid_->template getHostEntity<EntityType::codimension>(e));
     }
 
-
-    //! Iterator to one past the last entity of given codim on level for partition type
-    template<int codim, PartitionIteratorType pitype>
-    typename Base::template Codim<codim>::template Partition<pitype>::Iterator end () const
-    {
-      return grid_->template leafend<codim,pitype>();
-    }
 
 
     /** \todo Currently we support only vertex and element indices */
