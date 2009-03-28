@@ -5,6 +5,7 @@ configure
 aclocal.m4
 autom4te.cache
 depcomp
+dependencies.m4
 install-sh
 missing
 mkinstalldirs
