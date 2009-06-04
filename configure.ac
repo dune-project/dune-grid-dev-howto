@@ -6,7 +6,8 @@ AC_CONFIG_SRCDIR([grid/identitygrid.hh])
 AM_CONFIG_HEADER([config.h])
 
 # check all dune-module stuff
-DUNE_CHECK_ALL_M
+DUNE_SYMLINK
+DUNE_CHECK_ALL
 
 # preset variable to path such that #include <dune/...> works
 AC_SUBST(AM_CPPFLAGS, '$(DUNE_CPPFLAGS) -I$(top_srcdir)')
