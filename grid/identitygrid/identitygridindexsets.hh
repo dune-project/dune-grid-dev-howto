@@ -31,10 +31,9 @@ namespace Dune {
 
 
     //! get index of subEntity of a codim 0 entity
-    template<int codim>
-    int subIndex (const typename GridImp::Traits::template Codim<0>::Entity& e, int i) const
+    int subIndex (const typename GridImp::Traits::template Codim<0>::Entity& e, int i, int codim) const
     {
-      return grid_->hostgrid_->levelIndexSet(level_).template subIndex<codim>(*grid_->template getHostEntity<0>(e), i);
+      return grid_->hostgrid_->levelIndexSet(level_).subIndex(*grid_->template getHostEntity<0>(e), i, codim);
     }
 
 
@@ -117,10 +116,9 @@ namespace Dune {
         We use the RemoveConst to extract the Type from the mutable class,
         because the const class is not instantiated yet.
      */
-    template<int codim>
-    int subIndex (const typename remove_const<GridImp>::type::Traits::template Codim<0>::Entity& e, int i) const
+    int subIndex (const typename remove_const<GridImp>::type::Traits::template Codim<0>::Entity& e, int i, int codim) const
     {
-      return grid_->hostgrid_->leafIndexSet().template subIndex<codim>(*grid_->template getHostEntity<0>(e),i);
+      return grid_->hostgrid_->leafIndexSet().subIndex(*grid_->template getHostEntity<0>(e),i, codim);
     }
 
 
@@ -180,7 +178,7 @@ namespace Dune {
     IdentityGridGlobalIdSet (const GridImp& g) : grid_(&g) {}
 
     //! define the type used for persistent indices
-    typedef typename HostGrid::Traits::GlobalIdSet::IdType GlobalIdType;
+    typedef typename HostGrid::Traits::GlobalIdSet::IdType IdType;
 
 
     //! get id of an entity
@@ -189,7 +187,7 @@ namespace Dune {
        because the const class is not instantiated yet.
      */
     template<int cd>
-    GlobalIdType id (const typename remove_const<GridImp>::type::Traits::template Codim<cd>::Entity& e) const
+    IdType id (const typename remove_const<GridImp>::type::Traits::template Codim<cd>::Entity& e) const
     {
       // Return id of the host entity
       return grid_->hostgrid_->globalIdSet().id(*grid_->getRealImplementation(e).hostEntity_);
@@ -201,11 +199,10 @@ namespace Dune {
         We use the remove_const to extract the Type from the mutable class,
         because the const class is not instantiated yet.
      */
-    template<int cc>
-    GlobalIdType subId (const typename remove_const<GridImp>::type::Traits::template Codim<0>::Entity& e, int i) const
+    IdType subId (const typename remove_const<GridImp>::type::Traits::template Codim<0>::Entity& e, int i, int codim) const
     {
       // Return sub id of the host entity
-      return grid_->hostgrid_->globalIdSet().template subId<cc>(*grid_->getRealImplementation(e).hostEntity_,i);
+      return grid_->hostgrid_->globalIdSet().subId(*grid_->getRealImplementation(e).hostEntity_,i, codim);
     }
 
 
@@ -231,7 +228,7 @@ namespace Dune {
 
   public:
     //! define the type used for persistent local ids
-    typedef typename HostGrid::Traits::LocalIdSet::IdType LocalIdType;
+    typedef typename HostGrid::Traits::LocalIdSet::IdType IdType;
 
 
     //! constructor stores reference to a grid
@@ -244,7 +241,7 @@ namespace Dune {
         because the const class is not instantiated yet.
      */
     template<int cd>
-    LocalIdType id (const typename remove_const<GridImp>::type::Traits::template Codim<cd>::Entity& e) const
+    IdType id (const typename remove_const<GridImp>::type::Traits::template Codim<cd>::Entity& e) const
     {
       // Return id of the host entity
       return grid_->hostgrid_->localIdSet().id(*grid_->getRealImplementation(e).hostEntity_);
@@ -256,11 +253,10 @@ namespace Dune {
      * We use the remove_const to extract the Type from the mutable class,
      * because the const class is not instantiated yet.
      */
-    template<int cc>
-    LocalIdType subId (const typename remove_const<GridImp>::type::template Codim<0>::Entity& e, int i) const
+    IdType subId (const typename remove_const<GridImp>::type::template Codim<0>::Entity& e, int i, int codim) const
     {
       // Return sub id of the host entity
-      return grid_->hostgrid_->localIdSet().template subId<cc>(*grid_->getRealImplementation(e).hostEntity_,i);
+      return grid_->hostgrid_->localIdSet().subId(*grid_->getRealImplementation(e).hostEntity_,i,codim);
     }
 
 

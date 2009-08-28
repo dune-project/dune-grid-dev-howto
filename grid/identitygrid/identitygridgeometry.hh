@@ -55,8 +55,8 @@ namespace Dune {
 
 
     //! access to coordinates of corners. Index is the number of the corner
-    const FieldVector<ctype, coorddim>& operator[] (int i) const {
-      return hostGeometry_[i];
+    const FieldVector<ctype, coorddim> corner (int i) const {
+      return hostGeometry_.corner(i);
     }
 
 

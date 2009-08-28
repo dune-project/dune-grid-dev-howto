@@ -22,18 +22,12 @@ namespace Dune {
   class IdentityGridLevelIterator :
     public Dune::IdentityGridEntityPointer <codim,GridImp>
   {
-  private:
-
-    enum {dim = GridImp::dimension};
-
-
   public:
 
     //! Constructor
     explicit IdentityGridLevelIterator(const GridImp* identityGrid, int level)
       : IdentityGridEntityPointer<codim,GridImp>(identityGrid, identityGrid->hostgrid_->template lbegin<codim>(level)),
-        hostGridLevelIterator_(identityGrid->hostgrid_->template lbegin<codim>(level)),
-        hostGridLevelEndIterator_(identityGrid->hostgrid_->template lend<codim>(level))
+        hostGridLevelIterator_(identityGrid->hostgrid_->template lbegin<codim>(level))
     {
       this->virtualEntity_.setToTarget(hostGridLevelIterator_);
     }
@@ -45,8 +39,7 @@ namespace Dune {
     explicit IdentityGridLevelIterator(const GridImp* identityGrid, int level, bool endDummy)
       :
         IdentityGridEntityPointer<codim,GridImp>(identityGrid, identityGrid->hostgrid_->template lend<codim>(level)),
-        hostGridLevelIterator_(identityGrid->hostgrid_->template lend<codim>(level)),
-        hostGridLevelEndIterator_(identityGrid->hostgrid_->template lend<codim>(level))
+        hostGridLevelIterator_(identityGrid->hostgrid_->template lend<codim>(level))
     {}
 
 
@@ -64,9 +57,6 @@ namespace Dune {
 
     //! \todo Please doc me !
     HostGridLevelIterator hostGridLevelIterator_;
-
-    //! \todo Please doc me !
-    HostGridLevelIterator hostGridLevelEndIterator_;
 
   };
 

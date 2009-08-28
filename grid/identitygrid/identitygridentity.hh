@@ -375,8 +375,8 @@ namespace Dune {
      *  are numbered 0 ... count<cc>()-1
      */
     template<int cc>
-    typename GridImp::template Codim<cc>::EntityPointer entity (int i) const {
-      return IdentityGridEntityPointer<cc,GridImp>(identityGrid_, hostEntity_->template entity<cc>(i));
+    typename GridImp::template Codim<cc>::EntityPointer subEntity (int i) const {
+      return IdentityGridEntityPointer<cc,GridImp>(identityGrid_, hostEntity_->template subEntity<cc>(i));
     }
 
 

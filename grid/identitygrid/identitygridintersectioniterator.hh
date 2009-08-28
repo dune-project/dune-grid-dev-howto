@@ -127,41 +127,41 @@ namespace Dune {
     //! iteration started.
     //! Here returned element is in LOCAL coordinates of the element
     //! where iteration started.
-    const LocalGeometry& intersectionSelfLocal () const {
+    const LocalGeometry& geometryInInside () const {
       if (selfLocal_ == NULL)
-        selfLocal_ = new MakeableInterfaceObject<LocalGeometry>(hostIterator_->intersectionSelfLocal());
+        selfLocal_ = new MakeableInterfaceObject<LocalGeometry>(hostIterator_->geometryInInside());
 
       return *selfLocal_;
     }
 
     //! intersection of codimension 1 of this neighbor with element where iteration started.
     //! Here returned element is in LOCAL coordinates of neighbor
-    const LocalGeometry& intersectionNeighborLocal () const {
+    const LocalGeometry& geometryInOutside () const {
       if (neighborLocal_ == NULL)
-        neighborLocal_ = new MakeableInterfaceObject<LocalGeometry>(hostIterator_->intersectionNeighborLocal());
+        neighborLocal_ = new MakeableInterfaceObject<LocalGeometry>(hostIterator_->geometryInOutside());
 
       return *neighborLocal_;
     }
 
     //! intersection of codimension 1 of this neighbor with element where iteration started.
     //! Here returned element is in GLOBAL coordinates of the element where iteration started.
-    const Geometry& intersectionGlobal () const {
+    const Geometry& geometry () const {
       if (intersectionGlobal_ == NULL)
-        intersectionGlobal_ = new MakeableInterfaceObject<Geometry>(hostIterator_->intersectionGlobal());
+        intersectionGlobal_ = new MakeableInterfaceObject<Geometry>(hostIterator_->geometry());
 
       return *intersectionGlobal_;
     }
 
 
     //! local number of codim 1 entity in self where intersection is contained in
-    int numberInSelf () const {
-      return hostIterator_->numberInSelf();
+    int indexInInside () const {
+      return hostIterator_->indexInInside();
     }
 
 
     //! local number of codim 1 entity in neighbor where intersection is contained
-    int numberInNeighbor () const {
-      return hostIterator_->numberInNeighbor();
+    int indexInOutside () const {
+      return hostIterator_->indexInOutside();
     }
 
 
@@ -311,41 +311,41 @@ namespace Dune {
     //! iteration started.
     //! Here returned element is in LOCAL coordinates of the element
     //! where iteration started.
-    const LocalGeometry& intersectionSelfLocal () const {
+    const LocalGeometry& geometryInInside () const {
       if (selfLocal_ == NULL)
-        selfLocal_ = new MakeableInterfaceObject<LocalGeometry>(hostIterator_->intersectionSelfLocal());
+        selfLocal_ = new MakeableInterfaceObject<LocalGeometry>(hostIterator_->geometryInInside());
 
       return *selfLocal_;
     }
 
     //! intersection of codimension 1 of this neighbor with element where iteration started.
     //! Here returned element is in LOCAL coordinates of neighbor
-    const LocalGeometry& intersectionNeighborLocal () const {
+    const LocalGeometry& geometryInOutside () const {
       if (neighborLocal_ == NULL)
-        neighborLocal_ = new MakeableInterfaceObject<LocalGeometry>(hostIterator_->intersectionNeighborLocal());
+        neighborLocal_ = new MakeableInterfaceObject<LocalGeometry>(hostIterator_->geometryInOutside());
 
       return *neighborLocal_;
     }
 
     //! intersection of codimension 1 of this neighbor with element where iteration started.
     //! Here returned element is in GLOBAL coordinates of the element where iteration started.
-    const Geometry& intersectionGlobal () const {
+    const Geometry& geometry () const {
       if (intersectionGlobal_ == NULL)
-        intersectionGlobal_ = new MakeableInterfaceObject<Geometry>(hostIterator_->intersectionGlobal());
+        intersectionGlobal_ = new MakeableInterfaceObject<Geometry>(hostIterator_->geometry());
 
       return *intersectionGlobal_;
     }
 
 
     //! local number of codim 1 entity in self where intersection is contained in
-    int numberInSelf () const {
-      return hostIterator_->numberInSelf();
+    int indexInInside () const {
+      return hostIterator_->indexInInside();
     }
 
 
     //! local number of codim 1 entity in neighbor where intersection is contained
-    int numberInNeighbor () const {
-      return hostIterator_->numberInNeighbor();
+    int indexInOutside () const {
+      return hostIterator_->indexInOutside();
     }
 
 
