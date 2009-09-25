@@ -26,14 +26,14 @@ namespace Dune {
     template<int codim>
     int index (const typename GridImp::Traits::template Codim<codim>::Entity& e) const
     {
-      return grid_->hostgrid_->levelIndexSet(level_).template index<codim>(*grid_->template getHostEntity<codim>(e));
+      return grid_->hostgrid_->levelIndexSet(level_).template index<codim>(*grid_->template getHostEntityPointer<codim>(e));
     }
 
 
     //! get index of subEntity of a codim 0 entity
     int subIndex (const typename GridImp::Traits::template Codim<0>::Entity& e, int i, int codim) const
     {
-      return grid_->hostgrid_->levelIndexSet(level_).subIndex(*grid_->template getHostEntity<0>(e), i, codim);
+      return grid_->hostgrid_->levelIndexSet(level_).subIndex(*grid_->template getHostEntityPointer<0>(e), i, codim);
     }
 
 
@@ -60,7 +60,7 @@ namespace Dune {
     template<class EntityType>
     bool contains (const EntityType& e) const
     {
-      return grid_->hostgrid_->levelIndexSet(level_).contains(*grid_->template getHostEntity<EntityType::codimension>(e));
+      return grid_->hostgrid_->levelIndexSet(level_).contains(*grid_->template getHostEntityPointer<EntityType::codimension>(e));
     }
 
     /** \brief Set up the index set */
@@ -107,7 +107,7 @@ namespace Dune {
     template<int codim>
     int index (const typename remove_const<GridImp>::type::template Codim<codim>::Entity& e) const
     {
-      return grid_->hostgrid_->leafIndexSet().template index<codim>(*grid_->template getHostEntity<codim>(e));
+      return grid_->hostgrid_->leafIndexSet().template index<codim>(*grid_->template getHostEntityPointer<codim>(e));
     }
 
 
@@ -118,7 +118,7 @@ namespace Dune {
      */
     int subIndex (const typename remove_const<GridImp>::type::Traits::template Codim<0>::Entity& e, int i, int codim) const
     {
-      return grid_->hostgrid_->leafIndexSet().subIndex(*grid_->template getHostEntity<0>(e),i, codim);
+      return grid_->hostgrid_->leafIndexSet().subIndex(*grid_->template getHostEntityPointer<0>(e),i, codim);
     }
 
 
@@ -146,7 +146,7 @@ namespace Dune {
     template<class EntityType>
     bool contains (const EntityType& e) const
     {
-      return grid_->hostgrid_->leafIndexSet().contains(*grid_->template getHostEntity<EntityType::codimension>(e));
+      return grid_->hostgrid_->leafIndexSet().contains(*grid_->template getHostEntityPointer<EntityType::codimension>(e));
     }
 
 
