@@ -16,11 +16,14 @@ Makefile.dist.in
 *.css
 *.idv
 *.idx
+*.ind
+*.ilg
 *.lg
 *.tid
 *.tmp
 *.tms
 *.xref
+*.backup
 grid-dev-howto.pdf
 grid-dev-howto.ps
 grid-dev-howto.dvi
