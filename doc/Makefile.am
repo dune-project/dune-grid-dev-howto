@@ -1,6 +1,6 @@
 # $Id: Makefile.am 780 2007-07-30 19:52:27Z mblatt $
 
-SUBDIRS = doxygen #layout
+SUBDIRS = doxygen
 
 #TEXSOURCES = istl.tex istl.bib
 #EPSFILES = blockstructure.eps
