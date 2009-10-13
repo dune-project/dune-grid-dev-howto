@@ -2,7 +2,7 @@
 # Process this file with autoconf to produce a configure script.
 DUNE_AC_INIT
 AM_INIT_AUTOMAKE
-AC_CONFIG_SRCDIR([grid/identitygrid.hh])
+AC_CONFIG_SRCDIR([dune/grid/identitygrid.hh])
 AM_CONFIG_HEADER([config.h])
 
 # check all dune-module stuff
@@ -17,9 +17,10 @@ DUNE_SUMMARY_ALL
 
 # write output
 AC_CONFIG_FILES([Makefile
-    grid/Makefile
-    grid/identitygrid/Makefile
-    grid/test/Makefile
+    dune/Makefile
+    dune/grid/Makefile
+    dune/grid/identitygrid/Makefile
+    dune/grid/test/Makefile
     doc/doxygen/Makefile
     doc/doxygen/Doxyfile
     doc/Makefile
