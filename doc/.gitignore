@@ -5,6 +5,7 @@ semantic.cache
 *.html
 Makefile.dist
 Makefile.dist.in
+auto
 *.aux
 *.bbl
 *.blg
