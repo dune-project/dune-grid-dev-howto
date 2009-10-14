@@ -16,7 +16,6 @@ configure.lineno
 stamp-h1
 dune-grid-dev-howto*.tar.gz
 ltmain.sh
-dune
 am
 .libs
 
