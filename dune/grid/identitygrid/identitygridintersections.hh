@@ -38,6 +38,7 @@ namespace Dune {
     typedef typename GridImp::template Codim<1>::Geometry Geometry;
     typedef typename GridImp::template Codim<1>::LocalGeometry LocalGeometry;
     typedef typename GridImp::template Codim<0>::Entity Entity;
+    typedef FieldVector<ctype, dimworld> NormalVector;
 
     IdentityGridLeafIntersection(const GridImp* identityGrid,
                                  const HostLeafIntersectionIterator& hostIterator)
@@ -65,6 +66,14 @@ namespace Dune {
       return hostIterator_->boundary();
     }
 
+    /** \brief Return unit outer normal (length == 1)
+     *
+     *   The returned vector is the normal at the center() of the
+     *     intersection's geometry.
+     *       It is scaled to have unit length. */
+    NormalVector centerUnitOuterNormal () const {
+      return hostIterator_->centerUnitOuterNormal();
+    }
 
     //! return true if across the edge an neighbor on this level exists
     bool neighbor () const {
@@ -75,6 +84,11 @@ namespace Dune {
     //! return information about the Boundary
     int boundaryId () const {
       return hostIterator_->boundaryId();
+    }
+
+    //! return the boundary segment index
+    size_t boundarySegmentIndex() const {
+      return hostIterator_->boundarySegmentIndex();
     }
 
     //! Return true if this is a conforming intersection
@@ -190,6 +204,7 @@ namespace Dune {
     typedef typename GridImp::template Codim<1>::Geometry Geometry;
     typedef typename GridImp::template Codim<1>::LocalGeometry LocalGeometry;
     typedef typename GridImp::template Codim<0>::Entity Entity;
+    typedef FieldVector<ctype, dimworld> NormalVector;
 
     IdentityGridLevelIntersection(const GridImp* identityGrid,
                                   const HostLevelIntersectionIterator& hostIterator)
@@ -217,6 +232,14 @@ namespace Dune {
       return hostIterator_->boundary();
     }
 
+    /** \brief Return unit outer normal (length == 1)
+     *
+     *   The returned vector is the normal at the center() of the
+     *     intersection's geometry.
+     *       It is scaled to have unit length. */
+    NormalVector centerUnitOuterNormal () const {
+      return hostIterator_->centerUnitOuterNormal();
+    }
 
     //! return true if across the edge an neighbor on this level exists
     bool neighbor () const {
@@ -227,6 +250,11 @@ namespace Dune {
     //! return information about the Boundary
     int boundaryId () const {
       return hostIterator_->boundaryId();
+    }
+
+    //! return the boundary segment index
+    size_t boundarySegmentIndex() const {
+      return hostIterator_->boundarySegmentIndex();
     }
 
     //! Return true if this is a conforming intersection

@@ -213,6 +213,11 @@ namespace Dune {
       return hostgrid_->size(level,codim);
     }
 
+    /** \brief returns the number of boundary segments within the macro grid
+     */
+    size_t numBoundarySegments () const {
+      return hostgrid_->numBoundarySegments();
+    }
 
     //! number of leaf entities per codim in this process
     int size (int codim) const {

@@ -178,6 +178,10 @@ namespace Dune {
       return *this;
     }
 
+    //! returns true if father entity exists
+    bool hasFather () const {
+      return hostEntity_->hasFather();
+    }
 
     //! level of this element
     int level () const {
@@ -334,6 +338,10 @@ namespace Dune {
       return *this;
     }
 
+    //! returns true if father entity exists
+    bool hasFather () const {
+      return hostEntity_->hasFather();
+    }
 
     //! Level of this element
     int level () const

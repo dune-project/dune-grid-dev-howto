@@ -27,6 +27,9 @@ namespace Dune {
     enum {CodimInHostGrid = GridImp::HostGridType::dimension - mydim};
     enum {DimensionWorld = GridImp::HostGridType::dimensionworld};
 
+    //! type of jacobian transposed
+    typedef FieldMatrix< ctype, mydim, coorddim > JacobianTransposed;
+
     // select appropiate hostgrid geometry via typeswitch
     typedef typename GridImp::HostGridType::Traits::template Codim<CodimInHostGrid>::Geometry HostGridGeometryType;
     typedef typename GridImp::HostGridType::Traits::template Codim<CodimInHostGrid>::Geometry HostGridLocalGeometryType;
@@ -47,6 +50,10 @@ namespace Dune {
       return hostGeometry_.type();
     }
 
+    // return wether we have an affine mapping
+    bool affine() const {
+      return hostGeometry_.affine();
+    }
 
     //! return the number of corners of this element. Corners are numbered 0...n-1
     int corners () const {
@@ -66,6 +73,12 @@ namespace Dune {
       return hostGeometry_.global(local);
     }
 
+    /** \brief Return the transposed of the Jacobian
+     */
+    const JacobianTransposed &
+    jacobianTransposed ( const FieldVector<ctype, mydim>& local ) const {
+      return hostGeometry_.jacobianTransposed(local);
+    }
 
     /** \brief Maps a global coordinate within the element to a
      * local coordinate in its reference element */
