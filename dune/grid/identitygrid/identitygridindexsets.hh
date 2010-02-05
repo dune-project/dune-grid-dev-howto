@@ -7,6 +7,8 @@
  * \brief The index and id sets for the IdentityGrid class
  */
 
+#include <dune/grid/common/indexidset.hh>
+
 #include <vector>
 
 namespace Dune {
