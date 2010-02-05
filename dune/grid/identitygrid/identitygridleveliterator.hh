@@ -3,6 +3,8 @@
 #ifndef DUNE_IDENTITYGRIDLEVELITERATOR_HH
 #define DUNE_IDENTITYGRIDLEVELITERATOR_HH
 
+#include "identitygridentitypointer.hh"
+
 /** \file
  * \brief The IdentityGridLevelIterator class and its specializations
  */

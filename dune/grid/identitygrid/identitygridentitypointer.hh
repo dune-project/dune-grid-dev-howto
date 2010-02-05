@@ -3,6 +3,8 @@
 #ifndef DUNE_IDENTITYGRID_ENTITY_POINTER_HH
 #define DUNE_IDENTITYGRID_ENTITY_POINTER_HH
 
+#include "identitygridentity.hh"
+
 /** \file
  * \brief The IdentityGridEntityPointer class
  */

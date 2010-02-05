@@ -3,6 +3,8 @@
 #ifndef DUNE_IDENTITYGRID_INTERSECTIONS_HH
 #define DUNE_IDENTITYGRID_INTERSECTIONS_HH
 
+#include "identitygridleafiterator.hh"
+
 /** \file
  * \brief The IdentityGridLeafIntersection and IdentityGridLevelIntersection classes
  */
