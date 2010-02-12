@@ -1,0 +1,7 @@
+INPUT                  += @top_srcdir@/dune/grid/identitygrid \
+                         @top_srcdir@/dune/grid/identitygrid.hh
+EXCLUDE                += @top_srcdir@/dune/grid/test
+EXAMPLE_PATH           +=
+EXAMPLE_PATTERNS       +=
+IMAGE_PATH             +=
+PREDEFINED             += DOXYGEN HAVE_MPI:=1 HAVE_ALBERTA:=1 DUNE_DEPRECATED:="/** \deprecated */"
