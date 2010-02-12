@@ -2,7 +2,9 @@
 doxy-header.html
 doxygen-tag
 doxygen.log
+doxyerr.log
 Doxyfile
+Doxyfile.in
 html
 latex
 Makefile
