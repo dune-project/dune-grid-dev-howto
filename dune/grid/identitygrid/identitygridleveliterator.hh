@@ -36,7 +36,9 @@ namespace Dune {
 
 
     /** \brief Constructor which create the end iterator
-        \param endDummy Here only to distinguish it from the other constructor
+        \param endDummy      Here only to distinguish it from the other constructor
+        \param identityGrid  pointer to IdentityGrid instance
+        \param level         grid level on which the iterator shall be created
      */
     explicit IdentityGridLevelIterator(const GridImp* identityGrid, int level, bool endDummy)
       :

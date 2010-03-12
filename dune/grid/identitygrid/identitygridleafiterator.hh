@@ -37,7 +37,8 @@ namespace Dune {
 
 
     /** \brief Constructor which create the end iterator
-     *  \param endDummy Here only to distinguish it from the other constructor
+     *  \param endDummy      Here only to distinguish it from the other constructor
+     *  \param identityGrid  pointer to grid instance
      */
     explicit IdentityGridLeafIterator(const GridImp* identityGrid, bool endDummy) :
       IdentityGridEntityPointer<codim,GridImp>(identityGrid, identityGrid->hostgrid_->template leafend<codim>()),
