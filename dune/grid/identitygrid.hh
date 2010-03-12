@@ -70,7 +70,7 @@ namespace Dune {
   //
   //**********************************************************************
 
-  /** \brief [<em> provides \ref Dune::Grid </em>]
+  /** \brief [<em> provides <tt> Dune::Grid </tt> </em>]
    *
    */
   template <class HostGrid>
