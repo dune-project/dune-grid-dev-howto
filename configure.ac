@@ -23,6 +23,5 @@ AC_CONFIG_FILES([Makefile
     doc/doxygen/Makefile
     doc/doxygen/Doxyfile
     doc/Makefile
-    doc/Makefile.dist
     dune-grid-dev-howto.pc])
 AC_OUTPUT

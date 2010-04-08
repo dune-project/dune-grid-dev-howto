@@ -2,33 +2,18 @@
 
 SUBDIRS = doxygen
 
-#TEXSOURCES = istl.tex istl.bib
-#EPSFILES = blockstructure.eps
-EXTRA_DIST = Makefile.dist.in Makefile.dist.am
-#if BUILD_DOCS
-#  DOCS = istl.pdf
-#endif
+if BUILD_DOCS
+  DOCFILES = grid-dev-howto.pdf
+  EXTRA_DIST = grid-dev-howto.pdf
+endif
 
 
 # setting like in dune-web
 BASEDIR=../..
 CURDIR=doc/grid-dev-howto
+
+# where to install the docs
 docdir=$(datadir)/doc/dune-grid-dev-howto
-
-doc_DATA = $(DOCS) grid-dev-howto.pdf
-
-EXTRAINSTALL = grid-dev-howto.pdf
-
-CLEANFILES = *.aux *.bbl *.blg *.log *.out *.toc *.dvi *.ps
-
-# files to clean only in svn tree but not in tarball
-SVNCLEANFILES =  *.pdf
-clean-local:
-	if test -e $(top_srcdir)/doc/doxygen/Doxydep; then rm -rf $(SVNCLEANFILES); fi
-
-dist-hook:
-	sed $(srcdir)/Makefile.dist.am -e 's/Makefile\.dist/Makefile/g' > $(distdir)/Makefile.am
-	sed $(srcdir)/Makefile.dist.in -e 's/Makefile\.dist/Makefile/g' > $(distdir)/Makefile.in
 
 include $(top_srcdir)/am/latex
 include $(top_srcdir)/am/webstuff
