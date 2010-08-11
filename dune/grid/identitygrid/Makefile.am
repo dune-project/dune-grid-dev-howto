@@ -1,4 +1,4 @@
-identitygriddir = $(includedir)/dune/identitygrid/identitygrid
+identitygriddir = $(includedir)/dune/grid/identitygrid
 
 identitygrid_HEADERS = identitygridentitypointer.hh identitygridhierarchiciterator.hh \
                   identitygridleafiterator.hh identitygridentity.hh identitygridintersections.hh \
