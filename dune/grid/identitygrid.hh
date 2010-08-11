@@ -401,7 +401,7 @@ namespace Dune {
     }
 
 
-    //! Returns the hostgrid entity encapsulated in given subgrid entity
+    //! Returns the hostgrid entity encapsulated in given IdentityGrid entity
     template <int codim>
     typename HostGrid::Traits::template Codim<codim>::EntityPointer getHostEntityPointer(const typename Traits::template Codim<codim>::Entity& e) const
     {
