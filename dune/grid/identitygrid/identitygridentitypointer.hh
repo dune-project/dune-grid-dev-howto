@@ -43,6 +43,7 @@ namespace Dune {
 
 
     //! constructor
+    template< class HostGridEntityPointer >
     IdentityGridEntityPointer (const GridImp* identityGrid, const HostGridEntityPointer& hostEntity_) :
       identityGrid_(identityGrid),
       virtualEntity_(identityGrid, hostEntity_)

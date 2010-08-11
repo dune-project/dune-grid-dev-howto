@@ -7,8 +7,6 @@
  * \brief The IdentityGridEntity class
  */
 
-#include <dune/grid/common/referenceelements.hh>
-
 
 namespace Dune {
 
@@ -50,6 +48,7 @@ namespace Dune {
 
 
     //! \todo Please doc me !
+    template< class HostGridEntityPointer >
     IdentityGridMakeableEntity(const GridImp* identityGrid, const HostGridEntityPointer& hostEntity) :
       GridImp::template Codim<codim>::Entity (IdentityGridEntity<codim, dim, const GridImp>(identityGrid,hostEntity)),
       identityGrid_(identityGrid)
@@ -57,6 +56,7 @@ namespace Dune {
 
 
     //! \todo Please doc me !
+    template< class HostGridEntityPointer >
     void setToTarget(const HostGridEntityPointer& hostEntity) {
       this->realEntity.setToTarget(hostEntity);
     }
@@ -124,6 +124,7 @@ namespace Dune {
 
 
     //! Constructor for an entity in a given grid level
+    template< class HostGridEntityPointer >
     IdentityGridEntity(const GridImp* identityGrid, const HostGridEntityPointer& hostEntity) :
       hostEntity_(hostEntity),
       identityGrid_(identityGrid),
@@ -219,6 +220,7 @@ namespace Dune {
   private:
 
     //! \todo Please doc me !
+    template< class HostGridEntityPointer >
     void setToTarget(const HostGridEntityPointer& target)
     {
       if(geo_!=0)
@@ -284,6 +286,7 @@ namespace Dune {
 
 
     //! Constructor for an entity in a given grid level
+    template< class HostGridEntityPointer >
     IdentityGridEntity(const GridImp* identityGrid, const HostGridEntityPointer& hostEntity) :
       identityGrid_(identityGrid),
       geo_(0),
@@ -484,6 +487,7 @@ namespace Dune {
 
 
     //! \todo Please doc me !
+    template< class HostGridEntityPointer >
     void setToTarget(const HostGridEntityPointer& target)
     {
       if(geo_!=0)
