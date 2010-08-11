@@ -19,7 +19,11 @@ AC_CONFIG_FILES([Makefile
     dune/Makefile
     dune/grid/Makefile
     dune/grid/identitygrid/Makefile
+    dune/grid/io/Makefile
+    dune/grid/io/file/Makefile
+    dune/grid/io/file/dgfparser/Makefile
     dune/grid/test/Makefile
+    dune/grid/utility/Makefile
     doc/doxygen/Makefile
     doc/doxygen/Doxyfile
     doc/Makefile

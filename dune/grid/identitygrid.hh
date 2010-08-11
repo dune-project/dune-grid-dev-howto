@@ -32,6 +32,10 @@ namespace Dune {
   class IdentityGrid;
 
 
+  // External forward declarations
+  template< class Grid >
+  class HostGridAccess;
+
 
 
   template<int dim, class HostGrid>
@@ -95,6 +99,8 @@ namespace Dune {
 
     template<int codim_, int dim_, class GridImp_>
     friend class IdentityGridEntity;
+
+    friend class HostGridAccess< IdentityGrid< HostGrid > >;
 
   public:
 
