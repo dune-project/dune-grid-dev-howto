@@ -484,12 +484,6 @@ namespace Dune {
 
 
     //! \todo Please doc me !
-    template<class HostGrid>
-    struct hasHangingNodes< IdentityGrid<HostGrid> >
-    {
-      static const bool v = hasHangingNodes<HostGrid>::v;
-    };
-
     //! \todo Please doc me !
     template<class HostGrid>
     struct isLevelwiseConforming< IdentityGrid<HostGrid> >
