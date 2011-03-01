@@ -33,9 +33,10 @@ namespace Dune {
 
 
     //! get index of subEntity of a codim 0 entity
-    int subIndex (const typename GridImp::Traits::template Codim<0>::Entity& e, int i, int codim) const
+    template<int cc>
+    int subIndex (const typename GridImp::Traits::template Codim<cc>::Entity& e, int i, int codim) const
     {
-      return grid_->hostgrid_->levelIndexSet(level_).subIndex(*grid_->template getHostEntityPointer<0>(e), i, codim);
+      return grid_->hostgrid_->levelIndexSet(level_).subIndex(*grid_->template getHostEntityPointer<cc>(e), i, codim);
     }
 
 
@@ -118,9 +119,10 @@ namespace Dune {
         We use the RemoveConst to extract the Type from the mutable class,
         because the const class is not instantiated yet.
      */
-    int subIndex (const typename remove_const<GridImp>::type::Traits::template Codim<0>::Entity& e, int i, int codim) const
+    template<int cc>
+    int subIndex (const typename remove_const<GridImp>::type::Traits::template Codim<cc>::Entity& e, int i, int codim) const
     {
-      return grid_->hostgrid_->leafIndexSet().subIndex(*grid_->template getHostEntityPointer<0>(e),i, codim);
+      return grid_->hostgrid_->leafIndexSet().subIndex(*grid_->template getHostEntityPointer<cc>(e),i, codim);
     }
 
 
