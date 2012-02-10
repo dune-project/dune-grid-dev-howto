@@ -57,22 +57,6 @@ namespace Dune {
     //! prefix increment
     void increment() {
       ++GridImp::getRealImplementation(intersection_).hostIterator_;
-
-      // Delete intersection geometry objects, if present
-      if (GridImp::getRealImplementation(intersection_).intersectionGlobal_ != NULL) {
-        delete GridImp::getRealImplementation(intersection_).intersectionGlobal_;
-        GridImp::getRealImplementation(intersection_).intersectionGlobal_ = NULL;
-      }
-
-      if (GridImp::getRealImplementation(intersection_).selfLocal_ != NULL) {
-        delete GridImp::getRealImplementation(intersection_).selfLocal_;
-        GridImp::getRealImplementation(intersection_).selfLocal_ = NULL;
-      }
-
-      if (GridImp::getRealImplementation(intersection_).neighborLocal_ != NULL) {
-        delete GridImp::getRealImplementation(intersection_).neighborLocal_;
-        GridImp::getRealImplementation(intersection_).neighborLocal_ = NULL;
-      }
     }
 
     //! \brief dereferencing
@@ -124,23 +108,6 @@ namespace Dune {
     //! prefix increment
     void increment() {
       ++GridImp::getRealImplementation(intersection_).hostIterator_;
-
-      // Delete intersection geometry objects, if present
-      if (GridImp::getRealImplementation(intersection_).intersectionGlobal_ != NULL) {
-        delete GridImp::getRealImplementation(intersection_).intersectionGlobal_;
-        GridImp::getRealImplementation(intersection_).intersectionGlobal_ = NULL;
-      }
-
-      if (GridImp::getRealImplementation(intersection_).selfLocal_ != NULL) {
-        delete GridImp::getRealImplementation(intersection_).selfLocal_;
-        GridImp::getRealImplementation(intersection_).selfLocal_ = NULL;
-      }
-
-      if (GridImp::getRealImplementation(intersection_).neighborLocal_ != NULL) {
-        delete GridImp::getRealImplementation(intersection_).neighborLocal_;
-        GridImp::getRealImplementation(intersection_).neighborLocal_ = NULL;
-      }
-
     }
 
     //! \brief dereferencing

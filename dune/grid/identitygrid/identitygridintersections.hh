@@ -52,8 +52,7 @@ namespace Dune {
 
     IdentityGridLeafIntersection(const GridImp* identityGrid,
                                  const HostLeafIntersectionIterator& hostIterator)
-      : selfLocal_(NULL), neighborLocal_(NULL), intersectionGlobal_(NULL),
-        identityGrid_(identityGrid),
+      : identityGrid_(identityGrid),
         hostIterator_(hostIterator)
     {}
 
@@ -116,29 +115,23 @@ namespace Dune {
     //! iteration started.
     //! Here returned element is in LOCAL coordinates of the element
     //! where iteration started.
-    const LocalGeometry& geometryInInside () const {
-      if (selfLocal_ == NULL)
-        selfLocal_ = new MakeableInterfaceObject<LocalGeometry>(hostIterator_->geometryInInside());
-
-      return *selfLocal_;
+    LocalGeometry geometryInInside () const
+    {
+      return LocalGeometry( hostIterator_->geometryInInside() );
     }
 
     //! intersection of codimension 1 of this neighbor with element where iteration started.
     //! Here returned element is in LOCAL coordinates of neighbor
-    const LocalGeometry& geometryInOutside () const {
-      if (neighborLocal_ == NULL)
-        neighborLocal_ = new MakeableInterfaceObject<LocalGeometry>(hostIterator_->geometryInOutside());
-
-      return *neighborLocal_;
+    LocalGeometry geometryInOutside () const
+    {
+      return LocalGeometry( hostIterator_->geometryInOutside() );
     }
 
     //! intersection of codimension 1 of this neighbor with element where iteration started.
     //! Here returned element is in GLOBAL coordinates of the element where iteration started.
-    const Geometry& geometry () const {
-      if (intersectionGlobal_ == NULL)
-        intersectionGlobal_ = new MakeableInterfaceObject<Geometry>(hostIterator_->geometry());
-
-      return *intersectionGlobal_;
+    Geometry geometry () const
+    {
+      return Geometry( hostIterator_->geometry() );
     }
 
 
@@ -174,15 +167,6 @@ namespace Dune {
     //**********************************************************
     //  private methods
     //**********************************************************
-
-    //! pointer to element holding the selfLocal and selfGlobal information.
-    //! This element is created on demand.
-    mutable MakeableInterfaceObject<LocalGeometry>* selfLocal_;
-    mutable MakeableInterfaceObject<LocalGeometry>* neighborLocal_;
-
-    //! pointer to element holding the neighbor_global and neighbor_local
-    //! information.
-    mutable MakeableInterfaceObject<Geometry>* intersectionGlobal_;
 
     const GridImp* identityGrid_;
 
@@ -220,8 +204,7 @@ namespace Dune {
 
     IdentityGridLevelIntersection(const GridImp* identityGrid,
                                   const HostLevelIntersectionIterator& hostIterator)
-      : selfLocal_(NULL), neighborLocal_(NULL), intersectionGlobal_(NULL),
-        identityGrid_(identityGrid), hostIterator_(hostIterator)
+      : identityGrid_(identityGrid), hostIterator_(hostIterator)
     {}
 
     //! return EntityPointer to the Entity on the inside of this intersection
@@ -284,29 +267,23 @@ namespace Dune {
     //! iteration started.
     //! Here returned element is in LOCAL coordinates of the element
     //! where iteration started.
-    const LocalGeometry& geometryInInside () const {
-      if (selfLocal_ == NULL)
-        selfLocal_ = new MakeableInterfaceObject<LocalGeometry>(hostIterator_->geometryInInside());
-
-      return *selfLocal_;
+    LocalGeometry geometryInInside () const
+    {
+      return LocalGeometry( hostIterator_->geometryInInside() );
     }
 
     //! intersection of codimension 1 of this neighbor with element where iteration started.
     //! Here returned element is in LOCAL coordinates of neighbor
-    const LocalGeometry& geometryInOutside () const {
-      if (neighborLocal_ == NULL)
-        neighborLocal_ = new MakeableInterfaceObject<LocalGeometry>(hostIterator_->geometryInOutside());
-
-      return *neighborLocal_;
+    LocalGeometry geometryInOutside () const
+    {
+      return LocalGeometry( hostIterator_->geometryInOutside() );
     }
 
     //! intersection of codimension 1 of this neighbor with element where iteration started.
     //! Here returned element is in GLOBAL coordinates of the element where iteration started.
-    const Geometry& geometry () const {
-      if (intersectionGlobal_ == NULL)
-        intersectionGlobal_ = new MakeableInterfaceObject<Geometry>(hostIterator_->geometry());
-
-      return *intersectionGlobal_;
+    Geometry geometry () const
+    {
+      return Geometry( hostIterator_->geometry() );
     }
 
 
@@ -338,15 +315,6 @@ namespace Dune {
     }
 
   private:
-
-    //! pointer to element holding the selfLocal and selfGlobal information.
-    //! This element is created on demand.
-    mutable MakeableInterfaceObject<LocalGeometry>* selfLocal_;
-    mutable MakeableInterfaceObject<LocalGeometry>* neighborLocal_;
-
-    //! pointer to element holding the neighbor_global and neighbor_local
-    //! information.
-    mutable MakeableInterfaceObject<Geometry>* intersectionGlobal_;
 
     const GridImp* identityGrid_;
 

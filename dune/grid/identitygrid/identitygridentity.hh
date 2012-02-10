@@ -133,35 +133,15 @@ namespace Dune {
     template< class HostGridEntityPointer >
     IdentityGridEntity(const GridImp* identityGrid, const HostGridEntityPointer& hostEntity) :
       hostEntity_(hostEntity),
-      identityGrid_(identityGrid),
-      geo_(0),
-      geoInFather_(0)
+      identityGrid_(identityGrid)
     {}
 
 
     //! \todo Please doc me !
     IdentityGridEntity(const IdentityGridEntity& original) :
       hostEntity_(original.hostEntity_),
-      identityGrid_(original.identityGrid_),
-      geo_(0),
-      geoInFather_(0)
+      identityGrid_(original.identityGrid_)
     {}
-
-
-    //! Destructor
-    ~IdentityGridEntity()
-    {
-      if (geo_!=0)
-      {
-        delete geo_;
-        geo_ = 0;
-      }
-      if (geoInFather_!=0)
-      {
-        delete geoInFather_;
-        geoInFather_ = 0;
-      }
-    }
 
 
     //! \todo Please doc me !
@@ -169,16 +149,6 @@ namespace Dune {
     {
       if (this != &original)
       {
-        if (geo_!=0)
-        {
-          delete geo_;
-          geo_ = 0;
-        }
-        if (geoInFather_!=0)
-        {
-          delete geoInFather_;
-          geoInFather_ = 0;
-        }
         identityGrid_ = original.identityGrid_;
         hostEntity_ = original.hostEntity_;
       }
@@ -212,11 +182,9 @@ namespace Dune {
 
 
     //! geometry of this entity
-    const Geometry& geometry () const
+    Geometry geometry () const
     {
-      if (geo_==0)
-        geo_ = new MakeableInterfaceObject<Geometry>(hostEntity_->geometry());
-      return *geo_;
+      return Geometry( hostEntity_->geometry() );
     }
 
 
@@ -229,16 +197,6 @@ namespace Dune {
     template< class HostGridEntityPointer >
     void setToTarget(const HostGridEntityPointer& target)
     {
-      if(geo_!=0)
-      {
-        delete geo_;
-        geo_ = 0;
-      }
-      if (geoInFather_!=0)
-      {
-        delete geoInFather_;
-        geoInFather_ = 0;
-      }
       hostEntity_ = target;
     }
 
@@ -246,8 +204,6 @@ namespace Dune {
     const GridImp* identityGrid_;
 
     //! the current geometry
-    mutable MakeableInterfaceObject<Geometry> *geo_;
-    mutable MakeableInterfaceObject<Geometry> *geoInFather_;
   };
 
 
@@ -297,8 +253,6 @@ namespace Dune {
     template< class HostGridEntityPointer >
     IdentityGridEntity(const GridImp* identityGrid, const HostGridEntityPointer& hostEntity) :
       identityGrid_(identityGrid),
-      geo_(0),
-      geoInFather_(0),
       hostEntity_(hostEntity)
     {}
 
@@ -306,26 +260,8 @@ namespace Dune {
     //! \todo Please doc me !
     IdentityGridEntity(const IdentityGridEntity& original) :
       identityGrid_(original.identityGrid_),
-      geo_(0),
-      geoInFather_(0),
       hostEntity_(original.hostEntity_)
     {}
-
-
-    //! Destructor
-    ~IdentityGridEntity()
-    {
-      if (geo_!=0)
-      {
-        delete geo_;
-        geo_ = 0;
-      }
-      if (geoInFather_!=0)
-      {
-        delete geoInFather_;
-        geoInFather_ = 0;
-      }
-    }
 
 
     //! \todo Please doc me !
@@ -333,16 +269,6 @@ namespace Dune {
     {
       if (this != &original)
       {
-        if (geo_!=0)
-        {
-          delete geo_;
-          geo_ = 0;
-        }
-        if (geoInFather_!=0)
-        {
-          delete geoInFather_;
-          geoInFather_ = 0;
-        }
         identityGrid_ = original.identityGrid_;
         hostEntity_ = original.hostEntity_;
       }
@@ -368,13 +294,9 @@ namespace Dune {
 
 
     //! Geometry of this entity
-    const Geometry& geometry () const
+    Geometry geometry () const
     {
-      if (geo_==0)
-      {
-        geo_ = new MakeableInterfaceObject<Geometry>(hostEntity_->geometry());
-      }
-      return *geo_;
+      return Geometry( hostEntity_->geometry() );
     }
 
 
@@ -446,10 +368,9 @@ namespace Dune {
      * implementation of numerical algorithms is only done for simple discretizations.
      * Assumes that meshes are nested.
      */
-    const LocalGeometry& geometryInFather () const {
-      if (geoInFather_==0)
-        geoInFather_ = new MakeableInterfaceObject<LocalGeometry>(hostEntity_->geometryInFather());
-      return *geoInFather_;
+    LocalGeometry geometryInFather () const
+    {
+      return LocalGeometry( hostEntity_->geometryInFather() );
     }
 
 
@@ -498,27 +419,11 @@ namespace Dune {
     template< class HostGridEntityPointer >
     void setToTarget(const HostGridEntityPointer& target)
     {
-      if(geo_!=0)
-      {
-        delete geo_;
-        geo_ = 0;
-      }
-      if (geoInFather_!=0)
-      {
-        delete geoInFather_;
-        geoInFather_ = 0;
-      }
       hostEntity_ = target;
     }
 
 
     const GridImp* identityGrid_;
-
-    //! the current geometry
-    mutable MakeableInterfaceObject<Geometry> *geo_;
-
-    //! \todo Please doc me !
-    mutable MakeableInterfaceObject<LocalGeometry> *geoInFather_;
 
     //! \todo Please doc me !
     HostGridEntityPointer hostEntity_;

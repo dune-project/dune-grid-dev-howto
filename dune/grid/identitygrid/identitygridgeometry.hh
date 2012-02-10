@@ -38,7 +38,7 @@ namespace Dune {
     typedef typename SelectType<coorddim==DimensionWorld, HostGridGeometryType, HostGridLocalGeometryType>::Type HostGridGeometry;
 
 
-    /** Default constructor.
+    /** constructor from host geometry
      */
     IdentityGridGeometry(const HostGridGeometry& hostGeometry)
       : hostGeometry_(hostGeometry)
@@ -107,9 +107,21 @@ namespace Dune {
     }
 
 
-    const HostGridGeometry& hostGeometry_;
+    HostGridGeometry hostGeometry_;
 
   };
+
+
+  namespace FacadeOptions
+  {
+
+    template< int mydim, int coorddim, class GridImp >
+    struct StoreGeometryReference< mydim, coorddim, GridImp, IdentityGridGeometry >
+    {
+      static const bool v = false;
+    };
+
+  } // namespace FacadeOptions
 
 
 }  // namespace Dune
