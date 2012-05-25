@@ -143,13 +143,6 @@ namespace Dune {
     }
 
 
-    //! return grid name
-    std::string name() const
-    {
-      return "IdentityGrid";
-    }
-
-
     //! Return maximum level defined in this grid. Levels are numbered
     //! 0 ... maxlevel with 0 the coarsest level.
     int maxLevel() const {
