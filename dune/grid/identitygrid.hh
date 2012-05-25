@@ -19,6 +19,7 @@
 #include "identitygrid/identitygridgeometry.hh"
 #include "identitygrid/identitygridentity.hh"
 #include "identitygrid/identitygridentitypointer.hh"
+#include "identitygrid/identitygridentityseed.hh"
 #include "identitygrid/identitygridintersectioniterator.hh"
 #include "identitygrid/identitygridleveliterator.hh"
 #include "identitygrid/identitygridleafiterator.hh"
@@ -61,7 +62,10 @@ namespace Dune {
         typename HostGrid::Traits::GlobalIdSet::IdType,
         IdentityGridLocalIdSet< const IdentityGrid<HostGrid> >,
         typename HostGrid::Traits::LocalIdSet::IdType,
-        CollectiveCommunication<IdentityGrid<HostGrid> >
+        CollectiveCommunication<IdentityGrid<HostGrid> >,
+        DefaultLevelGridViewTraits,
+        DefaultLeafGridViewTraits,
+        IdentityGridEntitySeed
         > Traits;
   };
 
@@ -262,6 +266,18 @@ namespace Dune {
     const typename Traits::LeafIndexSet& leafIndexSet() const
     {
       return leafIndexSet_;
+    }
+
+
+    /** \brief Create EntityPointer from EntitySeed */
+    template < class EntitySeed >
+    typename Traits::template Codim<EntitySeed::codimension>::EntityPointer
+    entityPointer(const EntitySeed& seed) const
+    {
+      typedef typename Traits::template Codim<EntitySeed::codimension>::EntityPointer EntityPointer;
+      typedef IdentityGridEntityPointer<EntitySeed::codimension, const typename Traits::Grid> EntityPointerImp;
+
+      return EntityPointer(EntityPointerImp(this, hostgrid_->entityPointer(seed.hostEntitySeed())));
     }
 
 

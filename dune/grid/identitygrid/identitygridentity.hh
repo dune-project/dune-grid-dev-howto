@@ -128,6 +128,8 @@ namespace Dune {
 
     typedef typename GridImp::template Codim<codim>::Geometry Geometry;
 
+    //! The type of the EntitySeed interface class
+    typedef typename GridImp::template Codim<codim>::EntitySeed EntitySeed;
 
     //! Constructor for an entity in a given grid level
     template< class HostGridEntityPointer >
@@ -158,6 +160,12 @@ namespace Dune {
     //! returns true if father entity exists
     bool hasFather () const {
       return hostEntity_->hasFather();
+    }
+
+    //! Create EntitySeed
+    EntitySeed seed () const
+    {
+      return EntitySeed(*hostEntity_);
     }
 
     //! level of this element
@@ -248,6 +256,8 @@ namespace Dune {
     //! Iterator over descendants of the entity
     typedef IdentityGridHierarchicIterator<GridImp> HierarchicIterator;
 
+    //! The type of the EntitySeed interface class
+    typedef typename GridImp::template Codim<0>::EntitySeed EntitySeed;
 
     //! Constructor for an entity in a given grid level
     template< class HostGridEntityPointer >
@@ -278,6 +288,12 @@ namespace Dune {
     //! returns true if father entity exists
     bool hasFather () const {
       return hostEntity_->hasFather();
+    }
+
+    //! Create EntitySeed
+    EntitySeed seed () const
+    {
+      return EntitySeed(*hostEntity_);
     }
 
     //! Level of this element
