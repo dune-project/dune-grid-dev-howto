@@ -7,6 +7,7 @@
  * \brief The IdentityGridEntity class
  */
 
+#include <dune/grid/common/grid.hh>
 
 namespace Dune {
 
