@@ -1,4 +1,4 @@
 Module: dune-grid-dev-howto
 Version: 2.3-svn
-Maintainer: dune@dune-project.org
+Maintainer: dune-devel@dune-project.org
 Depends: dune-grid (>= 2.3)
