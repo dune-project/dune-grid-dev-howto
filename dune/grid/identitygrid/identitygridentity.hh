@@ -35,7 +35,7 @@ namespace Dune {
 
   // External forward declarations
   template< class Grid >
-  class HostGridAccess;
+  struct HostGridAccess;
 
 
 
@@ -111,7 +111,7 @@ namespace Dune {
 
     friend class IdentityGridEntityPointer<codim,GridImp>;
 
-    friend class HostGridAccess< typename remove_const< GridImp >::type >;
+    friend struct HostGridAccess< typename remove_const< GridImp >::type >;
 
 
   private:
@@ -234,7 +234,7 @@ namespace Dune {
   class IdentityGridEntity<0,dim,GridImp> :
     public EntityDefaultImplementation<0,dim,GridImp, IdentityGridEntity>
   {
-    friend class HostGridAccess< typename remove_const< GridImp >::type >;
+    friend struct HostGridAccess< typename remove_const< GridImp >::type >;
 
   public:
 
