@@ -35,7 +35,7 @@ namespace Dune {
 
   // External forward declarations
   template< class Grid >
-  class HostGridAccess;
+  struct HostGridAccess;
 
 
 
@@ -104,7 +104,7 @@ namespace Dune {
     template<int codim_, int dim_, class GridImp_>
     friend class IdentityGridEntity;
 
-    friend class HostGridAccess< IdentityGrid< HostGrid > >;
+    friend struct HostGridAccess< IdentityGrid< HostGrid > >;
 
   public:
 
@@ -420,7 +420,7 @@ namespace Dune {
     template <int codim>
     typename HostGrid::Traits::template Codim<codim>::EntityPointer getHostEntityPointer(const typename Traits::template Codim<codim>::Entity& e) const
     {
-      return getRealImplementation(e).hostEntity_;
+      return this->getRealImplementation(e).hostEntity_;
     }
 
   protected:

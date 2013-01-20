@@ -14,7 +14,7 @@ namespace Dune {
 
   // External forward declarations
   template< class Grid >
-  class HostGridAccess;
+  struct HostGridAccess;
 
 
   /** \brief An intersection with a leaf neighbor element
@@ -31,7 +31,7 @@ namespace Dune {
 
     friend class IdentityGridLeafIntersectionIterator<GridImp>;
 
-    friend class HostGridAccess< typename remove_const< GridImp >::type >;
+    friend struct HostGridAccess< typename remove_const< GridImp >::type >;
 
     enum {dim=GridImp::dimension};
 
@@ -183,7 +183,7 @@ namespace Dune {
 
     friend class IdentityGridLevelIntersectionIterator<GridImp>;
 
-    friend class HostGridAccess< typename remove_const< GridImp >::type >;
+    friend struct HostGridAccess< typename remove_const< GridImp >::type >;
 
     enum {dim=GridImp::dimension};
 
