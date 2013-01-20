@@ -277,7 +277,7 @@ namespace Dune {
       typedef typename Traits::template Codim<EntitySeed::codimension>::EntityPointer EntityPointer;
       typedef IdentityGridEntityPointer<EntitySeed::codimension, const typename Traits::Grid> EntityPointerImp;
 
-      return EntityPointer(EntityPointerImp(this, hostgrid_->entityPointer(seed.hostEntitySeed())));
+      return EntityPointer(EntityPointerImp(this, hostgrid_->entityPointer(this->getRealImplementation(seed).hostEntitySeed())));
     }
 
 
