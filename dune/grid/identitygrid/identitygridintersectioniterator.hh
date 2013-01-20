@@ -37,7 +37,7 @@ namespace Dune {
 
   public:
 
-    typedef Dune::Intersection<const GridImp, Dune::IdentityGridLeafIntersection> Intersection;
+    typedef Dune::Intersection<const GridImp, Dune::IdentityGridLeafIntersection<GridImp> > Intersection;
 
     IdentityGridLeafIntersectionIterator(const GridImp* identityGrid,
                                          const HostLeafIntersectionIterator& hostIterator)
@@ -92,7 +92,7 @@ namespace Dune {
 
   public:
 
-    typedef Dune::Intersection<const GridImp, Dune::IdentityGridLevelIntersection> Intersection;
+    typedef Dune::Intersection<const GridImp, Dune::IdentityGridLevelIntersection<GridImp> > Intersection;
 
     IdentityGridLevelIntersectionIterator(const GridImp* identityGrid,
                                           const HostLevelIntersectionIterator& hostIterator)
