@@ -28,14 +28,15 @@ namespace Dune {
     enum {CodimInHostGrid = GridImp::HostGridType::dimension - mydim};
     enum {DimensionWorld = GridImp::HostGridType::dimensionworld};
 
-    //! type of jacobian transposed
-    typedef FieldMatrix< ctype, mydim, coorddim > JacobianTransposed;
-
     // select appropiate hostgrid geometry via typeswitch
     typedef typename GridImp::HostGridType::Traits::template Codim<CodimInHostGrid>::Geometry HostGridGeometryType;
     typedef typename GridImp::HostGridType::Traits::template Codim<CodimInHostGrid>::Geometry HostGridLocalGeometryType;
 
     typedef typename SelectType<coorddim==DimensionWorld, HostGridGeometryType, HostGridLocalGeometryType>::Type HostGridGeometry;
+
+    //! type of jacobian transposed
+    typedef typename HostGridGeometryType::JacobianInverseTransposed JacobianInverseTransposed;
+    typedef typename HostGridGeometryType::JacobianTransposed JacobianTransposed;
 
 
     /** constructor from host geometry
@@ -102,7 +103,7 @@ namespace Dune {
 
 
     //! The Jacobian matrix of the mapping from the reference element to this element
-    const FieldMatrix<ctype, coorddim,mydim>& jacobianInverseTransposed (const FieldVector<ctype, mydim>& local) const {
+    const JacobianInverseTransposed& jacobianInverseTransposed (const FieldVector<ctype, mydim>& local) const {
       return hostGeometry_.jacobianInverseTransposed(local);
     }
 
