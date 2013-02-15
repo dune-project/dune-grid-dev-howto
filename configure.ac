@@ -3,7 +3,7 @@
 DUNE_AC_INIT
 AM_INIT_AUTOMAKE
 AC_CONFIG_SRCDIR([dune/grid/identitygrid.hh])
-AM_CONFIG_HEADER([config.h])
+AC_CONFIG_HEADERS([config.h])
 
 # check all dune-module stuff
 DUNE_CHECK_ALL
