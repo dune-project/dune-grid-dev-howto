@@ -18,4 +18,11 @@ dune-grid-dev-howto*.tar.gz
 ltmain.sh
 am
 .libs
-
+*.swp
+*.tmp
+*.o
+*.lo
+*.la
+.deps/
+test-w-sgrid
+build-cmake/
