@@ -33,6 +33,12 @@ namespace Dune {
     enum {codimension = codim};
 
     /**
+     * \brief Construct an empty (i.e. isValid() == false) seed.
+     */
+    IdentityGridEntitySeed()
+    {}
+
+    /**
      * \brief Create EntitySeed from hostgrid Entity
      *
      * We call hostEntity.seed() directly in the constructor
@@ -50,6 +56,13 @@ namespace Dune {
       return hostEntitySeed_;
     }
 
+    /**
+     * \brief Check whether it is safe to create an Entity from this Seed
+     */
+    bool isValid() const
+    {
+      return hostEntitySeed_.isValid();
+    }
   private:
 
     HostEntitySeed hostEntitySeed_;
