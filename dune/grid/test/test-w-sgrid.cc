@@ -34,9 +34,6 @@ void testDim()
 
   grid.globalRefine(1);
 
-  typedef typename GridType::template Codim<0>::LevelIterator HostElementIterator;
-  typedef typename IdentityGrid<GridType>::template Codim<0>::LevelIterator ElementIterator;
-
   IdentityGrid<GridType> identityGrid(grid);
 
   gridcheck(identityGrid);
