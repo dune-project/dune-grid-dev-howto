@@ -77,7 +77,7 @@ namespace Dune {
 
     /** \brief Return the transposed of the Jacobian
      */
-    const JacobianTransposed &
+    JacobianTransposed
     jacobianTransposed ( const FieldVector<ctype, mydim>& local ) const {
       return hostGeometry_.jacobianTransposed(local);
     }
@@ -103,7 +103,7 @@ namespace Dune {
 
 
     //! The Jacobian matrix of the mapping from the reference element to this element
-    const JacobianInverseTransposed& jacobianInverseTransposed (const FieldVector<ctype, mydim>& local) const {
+    JacobianInverseTransposed jacobianInverseTransposed (const FieldVector<ctype, mydim>& local) const {
       return hostGeometry_.jacobianInverseTransposed(local);
     }
 
