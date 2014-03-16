@@ -112,19 +112,6 @@ namespace Dune {
 
   };
 
-
-  namespace FacadeOptions
-  {
-
-    template< int mydim, int coorddim, class GridImp >
-    struct StoreGeometryReference< mydim, coorddim, GridImp, IdentityGridGeometry >
-    {
-      static const bool v = false;
-    };
-
-  } // namespace FacadeOptions
-
-
 }  // namespace Dune
 
 #endif
