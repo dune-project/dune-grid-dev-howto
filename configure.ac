@@ -1,7 +1,7 @@
-#! /bin/bash
+# -*- Autoconf -*-
 # Process this file with autoconf to produce a configure script.
+
 DUNE_AC_INIT
-AM_INIT_AUTOMAKE
 AC_CONFIG_SRCDIR([dune/grid/identitygrid.hh])
 AC_CONFIG_HEADERS([config.h])
 
